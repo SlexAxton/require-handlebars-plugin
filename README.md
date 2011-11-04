@@ -37,7 +37,15 @@ Here's the partial (optional) ( path : `App/Template/CoolPartial.handlebars` )
 </div>
 ```
 
-Include the hbs.js plugin in the same directory as your require.js script is.
+Include the `hbs.js` plugin and the `Handlebars.js` file in the same directory as your require.js script is. Usually, this is similar to the following.
+
+```sh
+~/Code/scripts/require.js
+~/Code/scripts/hbs.js
+~/Code/scripts/Handlebars.js
+~/Code/scripts/App/Template/One.handlebars
+~/Code/scripts/App/Template/CoolPartial.handlebars
+```
 
 Then require your templates like so:
 
