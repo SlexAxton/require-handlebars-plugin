@@ -96,13 +96,29 @@ You should be able to see all of the templates and individual files in your netw
 
 # Notes
 
+## Partial Collision
+
 This plugin registers every single template as a partial with it's modified module name (Slashes replaced with underscores, and no file extension). 
 
 `App/Template/One.handlebars` is registered as `App_Template_One`
 
 I'd encourage you to _not_ call registerPartials in your code, and just use the automatic module registering, that way you definitely won't hit any collisions. You could also just be careful. We're all adults here.
 
+## Templates not loading cross-domain
+
 In dev mode, loading the templates requires that you are on the same domain as your templates. This is standard single origin policy stuff. Once you build, though, it won't matter since there are no additional requests. Usually a few cleverly placed host overrides get you through the dev mode hurdles. 
+
+# Other Templating Languages
+
+_Very_ little of this is specific to handlebars, but things are just a _tiny_ bit too specific about how everything works to properly generalize this.
+
+If you'd like to implement this for your templating language of choice, you'll need:
+
+* Has a pre-compile type functionality (unless you don't care about builds)
+* If it has some concept of partials, that you can register them externally
+* It eventually returns a function that takes data context and outputs something you can deal with.
+
+I'd just turn your template language into a module first (just the old global name, or whatever), then look through the references to `Handlebars` in `hbs.js` and see if your templating language does something similar. It's not a terribly complicated process.
 
 # License
 
