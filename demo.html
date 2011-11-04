@@ -1,0 +1,25 @@
+<!DocTypE hTmL>
+<html>
+<head>
+  <meta charset=utf-8 />
+  <title>Demo App for require-handlebars-plugin</title>
+</head>
+<body>
+<div id="demo-app-container"></div>
+
+<!-- use a common require.js and app injection method. -->
+<script src="demo/require.js" data-main="demo/main.js"></script>
+
+<script>
+// I change the path as to not duplicate the hbs.js and handlebars plugin.
+// Normally, just drop it in the same place as require.js and it'll work fine.
+// Essentially just ignore this.
+require({
+  paths : {
+    'hbs' : '../hbs',
+    'Handlebars' : '../Handlebars'
+  }
+});
+</script>
+</body>
+</html>
