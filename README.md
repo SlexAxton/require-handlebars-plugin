@@ -3,6 +3,7 @@
 ## Version
 
 Handlebars : v1.0.3beta
+
 hbs.js     : v0.1.0
 
 ## Requirements
@@ -68,7 +69,11 @@ As long as all of your paths match up, this should precompile all of your templa
 
 # Notes
 
-This plugin registers every single template as a partial with it's modified module name (Slashes replaced with underscores, and no file extension). I'd encourage you to _not_ registerPartials in your code, and just use the module registering, that way you definitely won't hit any collisions. You could also just be careful. We're all adults here.
+This plugin registers every single template as a partial with it's modified module name (Slashes replaced with underscores, and no file extension). 
+
+`App/Template/One.handlebars` is registered as `App_Template_One`
+
+I'd encourage you to _not_ call registerPartials in your code, and just use the automatic module registering, that way you definitely won't hit any collisions. You could also just be careful. We're all adults here.
 
 # License
 
