@@ -75,6 +75,14 @@ YAY!
 
 As long as all of your paths match up, this should precompile all of your templates and include them in the build.
 
+## Before Build
+
+![Before Build](http://i.imgur.com/YSTI3.jpg)
+
+## After Build
+
+![After Build](http://i.imgur.com/JUOlC.jpg)
+
 # Demo
 
 To run the demo, go into the root directory of this project and run the following command.
