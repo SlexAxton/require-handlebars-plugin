@@ -94,7 +94,7 @@ And visit `http://127.0.0.1:8000/demo-build.html` for the production build versi
 
 You should be able to see all of the templates and individual files in your network panel in dev mode, and just 2 minified files in build mode. 
 
-# Notes
+# Notes/QA
 
 ## Partial Collision
 
@@ -106,7 +106,11 @@ I'd encourage you to _not_ call registerPartials in your code, and just use the 
 
 ## Templates not loading cross-domain
 
-In dev mode, loading the templates requires that you are on the same domain as your templates. This is standard single origin policy stuff. Once you build, though, it won't matter since there are no additional requests. Usually a few cleverly placed host overrides get you through the dev mode hurdles. 
+In dev mode, loading the templates requires that you are on the same domain as your templates. This is standard same origin policy stuff. Once you build, though, it won't matter since there are no additional requests. Usually a few cleverly placed host overrides get you through the dev mode hurdles.
+
+## Doesn't work with my version of Handlebars
+
+This is a barely modified version of handlebars 1.0.3beta (which went out to the world with a non-updated version tag 1.0.2beta, whoops). Some of the functionality in here is new, but none of it should be specific exactly to what makes this work. Though, I did take out the code that tries to identify node.js and act differently, since we want it to be picked up by `require.js` and not the built-in node.js `require` keyword. I also turned it into a proper amd module, which makes it "require-able". There's nothing too crazy, though, so I'd suggest just using it to save yourself time. Or don't.
 
 # Other Templating Languages
 
