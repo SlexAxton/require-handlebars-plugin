@@ -69,19 +69,19 @@ define('hbs', ['Handlebars'], function ( Handlebars ) {
             callback(fs.readFileSync(path, 'utf8'));
         };
     } else if (typeof java !== "undefined" && typeof java.io !== "undefined") {
-	    fetchText = function(path, callback) {
-		    var f = new java.io.File(path);
-			var is = new java.io.FileReader(f);
-			var reader = new java.io.BufferedReader(is);
-			var line;
-			var text = "";
-			while ((line = reader.readLine()) != null) {
-			    text += new String(line) + "\n";
-			}
-			reader.close();
-			callback(text);
-		}
-	}
+        fetchText = function(path, callback) {
+            var f = new java.io.File(path);
+            var is = new java.io.FileReader(f);
+            var reader = new java.io.BufferedReader(is);
+            var line;
+            var text = "";
+            while ((line = reader.readLine()) != null) {
+                text += new String(line) + "\n";
+            }
+            reader.close();
+            callback(text);
+        }
+    }
 
       return {
 
@@ -142,9 +142,9 @@ define('hbs', ['Handlebars'], function ( Handlebars ) {
                 /*@end@*/
 
                 for ( var i in deps ) {
-				  if (deps.hasOwnProperty(i)) {
-                    deps[ i ] = 'hbs!' + deps[ i ].replace(/_/g, '/'); 
-				  }
+                    if (deps.hasOwnProperty(i)) {
+                        deps[ i ] = 'hbs!' + deps[ i ].replace(/_/g, '/');
+                    }
                 }
 
                 if ( !config.isBuild ) {
