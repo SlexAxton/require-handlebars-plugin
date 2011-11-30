@@ -81,7 +81,7 @@ define('hbs', ['Handlebars'], function ( Handlebars ) {
             }
             reader.close();
             callback(text);
-        }
+        };
     }
 
       return {
@@ -106,7 +106,7 @@ define('hbs', ['Handlebars'], function ( Handlebars ) {
         load: function (name, parentRequire, load, config) {
             var partialDeps = [];
             function findPartialDeps( text ) {
-              var matches = text.match( /{{>\s*([^\s]+?)\s*}}/ig );
+              var matches = text.match( /\{\{>\s*([^\s]+?)\s*\}\}/ig );
               var res = [];
               for (var i in matches) {
                 res.push(matches[i].split(' ')[1]);
@@ -124,7 +124,7 @@ define('hbs', ['Handlebars'], function ( Handlebars ) {
                 }
 
                 var prec = Handlebars.precompile(text);
-                text = "/* START_TEMPLATE */\n" + 
+                text = "/* START_TEMPLATE */\n" +
                        "define('hbs!"+name+"',['hbs','Handlebars'"+depStr+"], function( hbs, Handlebars ){ \n" +
                          "var t = Handlebars.template(" + prec + ");\n" +
                          "Handlebars.registerPartial('" + name.replace( /\//g , '_') + "', t);\n" +
@@ -153,23 +153,23 @@ define('hbs', ['Handlebars'], function ( Handlebars ) {
 
                 if ( !config.isBuild ) {
                   require( deps, function (){
-                    load.fromText(name, text);
+                    load.fromText(path, text);
 
                     //Give result to load. Need to wait until the module
                     //is fully parse, which will happen after this
                     //execution.
-                    parentRequire([name], function (value) {
+                    parentRequire([path], function (value) {
                       load(value);
                     });
                   });
                 }
                 else {
-                  load.fromText(name, text);
+                  load.fromText(path, text);
 
                   //Give result to load. Need to wait until the module
                   //is fully parse, which will happen after this
                   //execution.
-                  parentRequire([name], function (value) {
+                  parentRequire([path], function (value) {
                     load(value);
                   });
                 }
