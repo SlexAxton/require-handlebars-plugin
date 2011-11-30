@@ -7,19 +7,18 @@
 <body>
 <div id="demo-app-container"></div>
 
-<!-- use a common require.js and app injection method. -->
-<script src="demo/require.js" data-main="demo/main.js"></script>
-
-<script>
-// I change the path as to not duplicate the hbs.js and handlebars plugin.
-// Normally, just drop it in the same place as require.js and it'll work fine.
-// Essentially just ignore this.
-require({
-  paths : {
+<!-- If you set the require variable to an object, it automatically is the config :D -->
+<script>require = {
+  locale : "en_ca",
+  // I change the path as to not duplicate the hbs.js and handlebars plugin.
+  // Normally, just drop it in the same place as require.js and it'll work fine.
+  // Essentially just ignore this.
+  paths  : {
     'hbs' : '../hbs',
     'Handlebars' : '../Handlebars'
   }
-});
-</script>
+};</script>
+<!-- use a common require.js and app injection method. -->
+<script src="demo/require.js" data-main="demo/main.js"></script>
 </body>
 </html>

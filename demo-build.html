@@ -10,20 +10,17 @@
 
 
 <!-- use a common require.js and app injection method. -->
-<script src="demo-build/require.js" data-main="demo-build/main.js"></script>
-
-<script>
-// I change the path as to not duplicate the hbs.js and handlebars plugin.
-// Normally, just drop it in the same place as require.js and it'll work fine.
-// Essentially just ignore this.
-require({
-  paths : {
+<script>require = {
+  locale : "en_ca",
+  // I change the path as to not duplicate the hbs.js and handlebars plugin.
+  // Normally, just drop it in the same place as require.js and it'll work fine.
+  // Essentially just ignore this.
+  paths  : {
     'hbs' : '../hbs',
     'Handlebars' : '../Handlebars'
   }
-});
-</script>
-
+};</script>
+<script src="demo-build/require.js" data-main="demo-build/main.js"></script>
 
 
 

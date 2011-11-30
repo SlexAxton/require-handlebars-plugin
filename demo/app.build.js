@@ -18,6 +18,8 @@
       "Handlebars" : "../Handlebars"
     },
 
+    locale: "en_ca",
+
     modules: [
         //Optimize the application files. Exclude jQuery since it is
         //included already in require-jquery.js
