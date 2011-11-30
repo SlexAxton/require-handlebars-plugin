@@ -117,7 +117,7 @@ Then in your templates, you can just do:
 {{roundNumber Data.ThreeFourths}}
 ```
 
-The system will make sure these modules are pulled in automatically from that directory. But if your app, you need a rounding module (perhaps in a view/datanormalization place), you could do this:
+The system will make sure these modules are pulled in automatically from that directory. But if in your app, you need a rounding module (perhaps in a view/datanormalization place), you could do this:
 
 ```javascript
 require(['template/helpers/roundNumber'], function ( roundNumber ){
@@ -186,7 +186,7 @@ As long as all of your paths match up, this should precompile all of your templa
 
 ## So many dependencies in the `hbs` plugin!
 
-I use them for coding happiness. It shouldn't bother you tooooo much, because it all get built out in production. The `hbs.js` file essentially gets written to the main.js file as a noop (a few empty definitions), and none of it's dependencies are included into the build.
+I use them for coding happiness. It shouldn't bother you tooooo much, because it all gets built out in production. The `hbs.js` file essentially gets written to the main.js file as a noop (a few empty definitions), and none of it's dependencies are included into the build.
 
 # Demo
 
