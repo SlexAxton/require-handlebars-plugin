@@ -1,5 +1,5 @@
 /**
- * @license handlebars hbs 0.1.0 - Alex Sexton, but Handlebars has it's own licensing junk
+ * @license handlebars hbs 0.2.0 - Alex Sexton, but Handlebars has it's own licensing junk
  *
  * Available via the MIT or new BSD license.
  * see: http://github.com/jrburke/require-cs for details on the plugin this was based off of
@@ -28,7 +28,11 @@ define([
             throw new Error('Environment unsupported.');
         },
         buildMap = [],
-        filecode = "w+";
+        filecode = "w+",
+        templateExtension = ".hbs",
+        devStyleDirectory = "/demo/styles/",
+        buildStyleDirectory = "/demo-build/styles/",
+        buildCSSFileName = "screen.build.css";
 
     if (typeof window !== "undefined" && window.navigator && window.document) {
         // Browser action
@@ -86,12 +90,12 @@ define([
             var reader = new java.io.BufferedReader(is);
             var line;
             var text = "";
-            while ((line = reader.readLine()) != null) {
+            while ((line = reader.readLine()) !== null) {
                 text += new String(line) + "\n";
             }
             reader.close();
             callback(text);
-        }
+        };
     }
 
     var cache = {};
@@ -110,6 +114,10 @@ define([
 //>>excludeEnd('excludeAfterBuild')
 
       return {
+
+        setExtension : function (ext) {
+          templateExtension = ext;
+        },
 
         get: function () {
             return Handlebars;
@@ -269,7 +277,7 @@ define([
               };
             }
 
-            var path = parentRequire.toUrl(name + '.hbs');
+            var path = parentRequire.toUrl(name + templateExtension);
             fetchOrGetCached( parentRequire.toUrl('template/i18n/'+(config.locale || "en_us")+'.json'), function (langMap) {
               langMap = JSON.parse(langMap);
               fetchText(path, function (text) {
@@ -323,15 +331,14 @@ define([
                                 str = _(metaObj.styles).map(function (style) {
                                   if (!styleMap[style]) {
                                     styleMap[style] = true;
-                                    // HARD CODED SORRY
-                                    return "@import url(/demo-build/styles/"+style+".css);\n";
+                                    return "@import url("+buildStyleDirectory+style+".css);\n";
                                   }
                                   return "";
                                 }).join("\n");
-                            
+
                             // I write out my import statements to a file in order to help me build stuff.
                             // Then I use a tool to inline my import statements afterwards. (you can run r.js on it too)
-                            fs.open(__dirname + '/demo-build/styles/screen.build.css', filecode, '0666', function( e, id ) {
+                            fs.open(__dirname + buildStyleDirectory + buildCSSFileName, filecode, '0666', function( e, id ) {
                               fs.writeSync(id, str, null, encoding='utf8');
                               fs.close(id);
                             });
@@ -356,7 +363,7 @@ define([
 
                   var prec = precompile( text, _.extend( langMap, config.localeMapping ) );
                   
-                  text = "/* START_TEMPLATE */\n" + 
+                  text = "/* START_TEMPLATE */\n" +
                          "define('hbs!"+name+"',['hbs','Handlebars'"+depStr+helpDepStr+"], function( hbs, Handlebars ){ \n" +
                            "var t = Handlebars.template(" + prec + ");\n" +
                            "Handlebars.registerPartial('" + name.replace( /\//g , '_') + "', t);\n" +
@@ -386,23 +393,23 @@ define([
 
                   if ( !config.isBuild ) {
                     require( deps, function (){
-                      load.fromText(name, text);
+                      load.fromText(path, text);
 
                       //Give result to load. Need to wait until the module
                       //is fully parse, which will happen after this
                       //execution.
-                      parentRequire([name], function (value) {
+                      parentRequire([path], function (value) {
                         load(value);
                       });
                     });
                   }
                   else {
-                    load.fromText(name, text);
+                    load.fromText(path, text);
 
                     //Give result to load. Need to wait until the module
                     //is fully parse, which will happen after this
                     //execution.
-                    parentRequire([name], function (value) {
+                    parentRequire([path], function (value) {
                       load(value);
                     });
                   }
