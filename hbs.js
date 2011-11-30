@@ -1,5 +1,5 @@
 /**
- * @license require-hbs 0.1.0 - WTFPL - Alex Sexton
+ * @license require-hbs 0.1.0+ - WTFPL - Alex Sexton
  * but Handlebars and require.js has it's own licensing junk
  * Also a lot of this code is inspired by James Burke's other plugins
  *
@@ -17,7 +17,8 @@ define('hbs', ['Handlebars'], function ( Handlebars ) {
         fetchText = function () {
             throw new Error('Environment unsupported.');
         },
-        buildMap = [];
+        buildMap = [],
+        templateExtension = '.hbs';
 
     if (typeof window !== "undefined" && window.navigator && window.document) {
         // Browser action
@@ -85,6 +86,10 @@ define('hbs', ['Handlebars'], function ( Handlebars ) {
 
       return {
 
+        setExtension : function(ext){
+            templateExtension = ext;
+        },
+
         get: function () {
             return Handlebars;
         },
@@ -109,8 +114,7 @@ define('hbs', ['Handlebars'], function ( Handlebars ) {
               return res;
             }
 
-            // If you name your handlebars files with the .hbs extension, change this here.
-            var path = parentRequire.toUrl(name + '.handlebars');
+            var path = parentRequire.toUrl(name + templateExtension);
             fetchText(path, function (text) {
                 var deps = findPartialDeps( text ),
                     depStr = deps.join("', 'hbs!").replace(/_/g, '/');
