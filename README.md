@@ -2,9 +2,9 @@
 
 ## Version
 
-Handlebars : v1.0.beta.4
+Handlebars : `v1.0.beta.4`
 
-hbs.js     : v0.2.0
+hbs.js     : `v0.2.0`
 
 ## Requirements
 
@@ -227,7 +227,7 @@ Unfortunately my logic forces a circular dependency right now. The work-around i
 
 ## Doesn't work with my version of Handlebars
 
-This is a barely modified version of handlebars 1.0.3beta (which went out to the world with a non-updated version tag 1.0.2beta, whoops). Some of the functionality in here is new, but none of it should be specific exactly to what makes this work. Though, I did take out the code that tries to identify node.js and act differently, since we want it to be picked up by `require.js` and not the built-in node.js `require` keyword. I also turned it into a proper amd module, which makes it "require-able". There's nothing too crazy, though, so I'd suggest just using it to save yourself time. Or don't.
+This is a barely modified version of handlebars 1.0.beta.4 (which _still_ went out to the world with a non-updated version tag 1.0.2beta, whoops). Some of the functionality in here is new, but none of it should be specific exactly to what makes this work. Though, I did take out the code that tries to identify node.js and act differently, since we want it to be picked up by `require.js` and not the built-in node.js `require` keyword. I also turned it into a proper amd module, which makes it "require-able". There's nothing too crazy, though, so I'd suggest just using it to save yourself time. Or don't.
 
 # Other Templating Languages
 
@@ -238,6 +238,7 @@ If you'd like to implement this for your templating language of choice, you'll n
 * Has a pre-compile type functionality (unless you don't care about builds)
 * If it has some concept of partials, that you can register them externally
 * It eventually returns a function that takes data context and outputs something you can deal with.
+* For any of the meta-data, you'll need some fancy regex or an AST to walk through.
 
 I'd just turn your template language into a module first (just the old global name, or whatever), then look through the references to `Handlebars` in `hbs.js` and see if your templating language does something similar. It's not a terribly complicated process.
 
