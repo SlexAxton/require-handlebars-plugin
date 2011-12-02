@@ -1404,7 +1404,7 @@
 }(root));
 
 // Register as a named module with AMD.
-define('underscore', function() {
+define(function() {
   return _;
 });
 }).call({});

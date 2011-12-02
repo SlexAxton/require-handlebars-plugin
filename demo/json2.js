@@ -355,7 +355,7 @@ var JSON = window.JSON || {};
     }
 }());
 
-define('json2',function(){
+define(function(){
     return JSON;
 });
 // otherwise just leave it alone

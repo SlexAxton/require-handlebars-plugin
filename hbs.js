@@ -11,7 +11,7 @@
 define: false, process: false, window: false */  
 define([
 //>>excludeStart('excludeAfterBuild', pragmas.excludeAfterBuild)
-'Handlebars', 'underscore', 'Handlebars/i18nprecompile', 'json2', 'template/helpers/all' // need json for older browser support, kill if you don't need it
+'Handlebars', 'underscore', 'Handlebars/i18nprecompile', 'json2'
 //>>excludeEnd('excludeAfterBuild')
 ], function (
 //>>excludeStart('excludeAfterBuild', pragmas.excludeAfterBuild)
@@ -126,7 +126,7 @@ define([
         write: function (pluginName, name, write) {
             if (name in buildMap) {
                 var text = buildMap[name];
-                write(text);
+                write.asModule(pluginName + "!" + name, text);
             }
         },
 
@@ -134,8 +134,10 @@ define([
 
         load: function (name, parentRequire, load, config) {
           //>>excludeStart('excludeAfterBuild', pragmas.excludeAfterBuild)
+            
 
-            var partialDeps = [];
+            var compiledName = name + "@hbs",
+                partialDeps = [];
 
             function recursiveNodeSearch( statements, res ) {
               _(statements).forEach(function ( statement ) {
@@ -364,17 +366,17 @@ define([
                   var prec = precompile( text, _.extend( langMap, config.localeMapping ) );
                   
                   text = "/* START_TEMPLATE */\n" +
-                         "define('hbs!"+name+"',['hbs','Handlebars'"+depStr+helpDepStr+"], function( hbs, Handlebars ){ \n" +
+                         "define(['hbs','Handlebars'"+depStr+helpDepStr+"], function( hbs, Handlebars ){ \n" +
                            "var t = Handlebars.template(" + prec + ");\n" +
                            "Handlebars.registerPartial('" + name.replace( /\//g , '_') + "', t);\n" +
                            debugProperties +
                            "return t;\n" +
                          "});\n" +
                          "/* END_TEMPLATE */\n";
-                  
+
                   //Hold on to the transformed text if a build.
                   if (config.isBuild) {
-                      buildMap[name] = text;
+                      buildMap[compiledName] = text;
                   }
 
                   //IE with conditional comments on cannot handle the
@@ -393,23 +395,23 @@ define([
 
                   if ( !config.isBuild ) {
                     require( deps, function (){
-                      load.fromText(path, text);
+                      load.fromText(compiledName, text);
 
                       //Give result to load. Need to wait until the module
                       //is fully parse, which will happen after this
                       //execution.
-                      parentRequire([path], function (value) {
+                      parentRequire([compiledName], function (value) {
                         load(value);
                       });
                     });
                   }
                   else {
-                    load.fromText(path, text);
+                    load.fromText(compiledName, text);
 
                     //Give result to load. Need to wait until the module
                     //is fully parse, which will happen after this
                     //execution.
-                    parentRequire([path], function (value) {
+                    parentRequire([compiledName], function (value) {
                       load(value);
                     });
                   }
