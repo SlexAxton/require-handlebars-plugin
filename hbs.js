@@ -30,6 +30,7 @@ define([
         buildMap = [],
         filecode = "w+",
         templateExtension = ".hbs",
+        customNameExtension = "@hbs",
         devStyleDirectory = "/demo/styles/",
         buildStyleDirectory = "/demo-build/styles/",
         buildCSSFileName = "screen.build.css";
@@ -124,8 +125,9 @@ define([
         },
 
         write: function (pluginName, name, write) {
-            if (name in buildMap) {
-                var text = buildMap[name];
+
+            if ( (name + customNameExtension ) in buildMap) {
+                var text = buildMap[name + customNameExtension];
                 write.asModule(pluginName + "!" + name, text);
             }
         },
@@ -136,7 +138,7 @@ define([
           //>>excludeStart('excludeAfterBuild', pragmas.excludeAfterBuild)
             
 
-            var compiledName = name + "@hbs",
+            var compiledName = name + customNameExtension,
                 partialDeps = [];
 
             function recursiveNodeSearch( statements, res ) {
