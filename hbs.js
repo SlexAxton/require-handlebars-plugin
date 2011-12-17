@@ -11,7 +11,7 @@
 define: false, process: false, window: false */  
 define([
 //>>excludeStart('excludeAfterBuild', pragmas.excludeAfterBuild)
-'Handlebars', 'underscore', 'Handlebars/i18nprecompile', 'json2'
+'Handlebars', 'underscore', 'Handlebars/i18nprecompile', 'underscore.string'
 //>>excludeEnd('excludeAfterBuild')
 ], function (
 //>>excludeStart('excludeAfterBuild', pragmas.excludeAfterBuild)
@@ -23,7 +23,12 @@ define([
 
 //>>excludeStart('excludeAfterBuild', pragmas.excludeAfterBuild)
 
-  if (!_ && require.nodeRequire) { _ = require.nodeRequire(require.toUrl('underscore')); }
+if (!_ && require.nodeRequire) { 
+    _ = require.nodeRequire(require.toUrl('underscore'));
+    _.str = require.nodeRequire(require.toUrl('underscore.string'));
+} else {
+    _.str = require('underscore.string');
+}
 
   var fs, getXhr,
         progIds = ['Msxml2.XMLHTTP', 'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.4.0'],
@@ -301,7 +306,6 @@ define([
                       debugOutputEnd   = "",
                       debugProperties = "",
                       metaObj, head, linkElem;
-
                   
                   if ( depStr ) {
                     depStr = ",'hbs!" + depStr + "'";
@@ -310,7 +314,6 @@ define([
                     helpDepStr = ",'template/helpers/" + helpDepStr + "'";
                   }
 
-                  
                   if ( meta !== "{}" ) {
                     try {
                       metaObj = JSON.parse(meta);
