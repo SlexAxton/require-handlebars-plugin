@@ -15,13 +15,16 @@ define([
 //>>excludeEnd('excludeAfterBuild')
 ], function (
 //>>excludeStart('excludeAfterBuild', pragmas.excludeAfterBuild)
- Handlebars, _, precompile, JSON
+ Handlebars, _, precompile
 //>>excludeEnd('excludeAfterBuild')
 ) {
 // NOTE :: if you want to load template in production outside of the build, either precompile
 // them into modules or take out the conditional build stuff here
 
 //>>excludeStart('excludeAfterBuild', pragmas.excludeAfterBuild)
+
+  if (!_ && require.nodeRequire) { _ = require.nodeRequire(require.toUrl('underscore')); }
+
   var fs, getXhr,
         progIds = ['Msxml2.XMLHTTP', 'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.4.0'],
         fetchText = function () {

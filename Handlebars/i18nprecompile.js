@@ -1,6 +1,8 @@
 //>>excludeStart('excludeAfterBuild', pragmas.excludeAfterBuild)
 define(['Handlebars', "underscore"], function ( Handlebars, _ ) {
 
+  if (!_ && require.nodeRequire) { _ = require.nodeRequire(require.toUrl('underscore')); }
+
   function replaceLocaleStrings ( ast, mapping ) {
     mapping = mapping || {};
     // Base set of things
