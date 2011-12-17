@@ -11,7 +11,7 @@
 define: false, process: false, window: false */  
 define([
 //>>excludeStart('excludeAfterBuild', pragmas.excludeAfterBuild)
-'Handlebars', 'underscore', 'Handlebars/i18nprecompile', 'underscore.string'
+'Handlebars', 'underscore', 'Handlebars/i18nprecompile', 'underscore.string', 'json2'
 //>>excludeEnd('excludeAfterBuild')
 ], function (
 //>>excludeStart('excludeAfterBuild', pragmas.excludeAfterBuild)
