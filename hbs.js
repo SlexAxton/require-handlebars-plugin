@@ -6,16 +6,18 @@
  */
 
 /* Yes, deliciously evil. */
-/*jslint evil: true, strict: false, plusplus: false, regexp: false */
+/*jslint evil: true, strict: false, plusplus: false, regexp: false,
+ white: true, nomen: true, sloppy: true, plusplus: true, vars: true,
+ forin: true */
 /*global require: false, XMLHttpRequest: false, ActiveXObject: false,
-define: false, process: false, window: false */  
+ define: false, process: false, window: false, java: false, document: true */
 define([
 //>>excludeStart('excludeAfterBuild', pragmas.excludeAfterBuild)
-'Handlebars', 'underscore', 'Handlebars/i18nprecompile', 'underscore.string', 'json2'
+    'Handlebars', 'underscore', 'Handlebars/i18nprecompile', 'underscore.string', 'json2'
 //>>excludeEnd('excludeAfterBuild')
 ], function (
 //>>excludeStart('excludeAfterBuild', pragmas.excludeAfterBuild)
- Handlebars, _, precompile
+    Handlebars, _, precompile
 //>>excludeEnd('excludeAfterBuild')
 ) {
 // NOTE :: if you want to load template in production outside of the build, either precompile
@@ -23,12 +25,12 @@ define([
 
 //>>excludeStart('excludeAfterBuild', pragmas.excludeAfterBuild)
 
-if (!_ && require.nodeRequire) { 
+  if (!_ && require.nodeRequire) { 
     _ = require.nodeRequire(require.toUrl('underscore'));
     _.str = require.nodeRequire(require.toUrl('underscore.string'));
-} else {
+  } else {
     _.str = require('underscore.string');
-}
+  }
 
   var fs, getXhr,
         progIds = ['Msxml2.XMLHTTP', 'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.4.0'],
@@ -172,7 +174,7 @@ if (!_ && require.nodeRequire) {
 
             // See if the first item is a comment that's json
             function getMetaData( nodes ) {
-              var statment, res, test;
+              var statement, res, test;
               if ( nodes && nodes.statements ) {
                 statement = nodes.statements[0];
                 if ( statement.type === "comment" ) {
@@ -234,7 +236,7 @@ if (!_ && require.nodeRequire) {
                     _(statement.params).forEach(function(param){
                       parts = composeParts( param.parts );
 
-                      for(var part in parts ) {
+                      for( part in parts ) {
                         if ( parts[ part ] ) {
                           newprefix = parts[part] || newprefix;
                           helpersres.push(statement.id.string);
