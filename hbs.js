@@ -164,7 +164,7 @@ define([
 
             // See if the first item is a comment that's json
             function getMetaData( nodes ) {
-              var statment, res, test;
+              var statement, res, test;
               if ( nodes && nodes.statements ) {
                 statement = nodes.statements[0];
                 if ( statement.type === "comment" ) {
