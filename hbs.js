@@ -263,7 +263,7 @@ define([
               var defaultHelpers = ["helperMissing", "blockHelperMissing", "each", "if", "unless", "with"];
               
               return {
-                vars : _(res).unique().map(function(e){
+                vars : _(res).chain().unique().map(function(e){
                   if ( e === "" ) {
                     return '.';
                   }
@@ -271,13 +271,13 @@ define([
                     return e.substr(0,e.length-1) + '[]';
                   }
                   return e;
-                }),
-                helpers : _(_(helpersres).unique().map(function(e){
+                }).value(),
+                helpers : _(helpersres).chain().unique().map(function(e){
                   if ( _(defaultHelpers).contains(e) ) {
                     return undefined;
                   }
                   return e;
-                })).compact()
+                }).compact().value()
               };
             }
 
