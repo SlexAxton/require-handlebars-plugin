@@ -6,22 +6,32 @@
  */
 
 /* Yes, deliciously evil. */
-/*jslint evil: true, strict: false, plusplus: false, regexp: false */
+/*jslint evil: true, strict: false, plusplus: false, regexp: false,
+ white: true, nomen: true, sloppy: true, plusplus: true, vars: true,
+ forin: true */
 /*global require: false, XMLHttpRequest: false, ActiveXObject: false,
-define: false, process: false, window: false */  
+ define: false, process: false, window: false, java: false, document: true */
 define([
 //>>excludeStart('excludeAfterBuild', pragmas.excludeAfterBuild)
-'Handlebars', 'underscore', 'Handlebars/i18nprecompile', 'json2'
+    'Handlebars', 'underscore', 'Handlebars/i18nprecompile', 'underscore.string', 'json2'
 //>>excludeEnd('excludeAfterBuild')
 ], function (
 //>>excludeStart('excludeAfterBuild', pragmas.excludeAfterBuild)
- Handlebars, _, precompile, JSON
+    Handlebars, _, precompile
 //>>excludeEnd('excludeAfterBuild')
 ) {
 // NOTE :: if you want to load template in production outside of the build, either precompile
 // them into modules or take out the conditional build stuff here
 
 //>>excludeStart('excludeAfterBuild', pragmas.excludeAfterBuild)
+
+  if (!_ && require.nodeRequire) { 
+    _ = require.nodeRequire(require.toUrl('underscore'));
+    _.str = require.nodeRequire(require.toUrl('underscore.string'));
+  } else {
+    _.str = require('underscore.string');
+  }
+
   var fs, getXhr,
         progIds = ['Msxml2.XMLHTTP', 'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.4.0'],
         fetchText = function () {
@@ -226,7 +236,7 @@ define([
                     _(statement.params).forEach(function(param){
                       parts = composeParts( param.parts );
 
-                      for(var part in parts ) {
+                      for( part in parts ) {
                         if ( parts[ part ] ) {
                           newprefix = parts[part] || newprefix;
                           helpersres.push(statement.id.string);
@@ -298,7 +308,6 @@ define([
                       debugOutputEnd   = "",
                       debugProperties = "",
                       metaObj, head, linkElem;
-
                   
                   if ( depStr ) {
                     depStr = ",'hbs!" + depStr + "'";
@@ -307,7 +316,6 @@ define([
                     helpDepStr = ",'template/helpers/" + helpDepStr + "'";
                   }
 
-                  
                   if ( meta !== "{}" ) {
                     try {
                       metaObj = JSON.parse(meta);
