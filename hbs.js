@@ -169,7 +169,7 @@ define([
                 statement = nodes.statements[0];
                 if ( statement.type === "comment" ) {
                   try {
-                    res = _.str.trim( statement.comment );
+                    res = ( statement.comment ).replace(new RegExp('^[\\s]+|[\\s]+$', 'g'), '');
                     test = JSON.parse(res);
                     return res;
                   }
