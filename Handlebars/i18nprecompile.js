@@ -1,5 +1,8 @@
 //>>excludeStart('excludeAfterBuild', pragmas.excludeAfterBuild)
 define(['Handlebars', "underscore"], function ( Handlebars, _ ) {
+  if (_ === null) {
+    _ = exports._;
+  }
 
   function replaceLocaleStrings ( ast, mapping ) {
     mapping = mapping || {};

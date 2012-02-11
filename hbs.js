@@ -34,7 +34,9 @@ define([
         devStyleDirectory = "/demo/styles/",
         buildStyleDirectory = "/demo-build/styles/",
         buildCSSFileName = "screen.build.css";
-
+    if (_ === null) {
+	    _ = exports._;
+	}
     if (typeof window !== "undefined" && window.navigator && window.document) {
         // Browser action
         getXhr = function () {
