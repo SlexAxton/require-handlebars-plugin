@@ -92,6 +92,10 @@ Handlebars.registerHelper('log', function(context) {
   Handlebars.log(context);
 });
 ;
+
+//>>excludeStart('excludeAfterBuild', pragmas.excludeAfterBuild)
+// no need for parser if templates are pre-compiled
+
 // lib/handlebars/compiler/parser.js
 /* Jison generated parser */
 var handlebars = (function(){
@@ -561,6 +565,8 @@ Handlebars.parse = function(string) {
   Handlebars.Parser.yy = Handlebars.AST;
   return Handlebars.Parser.parse(string);
 };
+//>>excludeEnd('excludeAfterBuild')
+
 
 Handlebars.print = function(ast) {
   return new Handlebars.PrintVisitor().accept(ast);
