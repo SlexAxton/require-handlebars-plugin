@@ -10,18 +10,18 @@
 /*global require: false, XMLHttpRequest: false, ActiveXObject: false,
 define: false, process: false, window: false */  
 define([
-//>>excludeStart('excludeAfterBuild', pragmas.excludeAfterBuild)
+//>>excludeStart('excludeHbs', pragmas.excludeHbs)
 'Handlebars', 'underscore', 'Handlebars/i18nprecompile', 'json2'
-//>>excludeEnd('excludeAfterBuild')
+//>>excludeEnd('excludeHbs')
 ], function (
-//>>excludeStart('excludeAfterBuild', pragmas.excludeAfterBuild)
+//>>excludeStart('excludeHbs', pragmas.excludeHbs)
  Handlebars, _, precompile, JSON
-//>>excludeEnd('excludeAfterBuild')
+//>>excludeEnd('excludeHbs')
 ) {
 // NOTE :: if you want to load template in production outside of the build, either precompile
 // them into modules or take out the conditional build stuff here
 
-//>>excludeStart('excludeAfterBuild', pragmas.excludeAfterBuild)
+//>>excludeStart('excludeHbs', pragmas.excludeHbs)
   var fs, getXhr,
         progIds = ['Msxml2.XMLHTTP', 'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.4.0'],
         fetchText = function () {
@@ -112,7 +112,7 @@ define([
       }
     };
     var styleList = [], styleMap = {};
-//>>excludeEnd('excludeAfterBuild')
+//>>excludeEnd('excludeHbs')
 
       return {
 
@@ -135,7 +135,7 @@ define([
         version: '1.0.3beta',
 
         load: function (name, parentRequire, load, config) {
-          //>>excludeStart('excludeAfterBuild', pragmas.excludeAfterBuild)
+          //>>excludeStart('excludeHbs', pragmas.excludeHbs)
             
 
             var compiledName = name + customNameExtension,
@@ -419,7 +419,7 @@ define([
                   }
               });
             });
-          //>>excludeEnd('excludeAfterBuild')
+          //>>excludeEnd('excludeHbs')
         }
       };
 });

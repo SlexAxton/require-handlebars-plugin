@@ -13,7 +13,7 @@
         //set it to `false` if you need template strings even after build
         excludeHbsParser : true,
         // kills the entire plugin set once it's built.
-        excludeAfterBuild: true
+        excludeHbs: true
     },
 
     paths: {
