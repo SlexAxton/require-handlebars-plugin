@@ -8,8 +8,11 @@
     // inlining ftw
     inlineText: true,
 
-    // kills the entire plugin set once it's built.
     pragmasOnSave: {
+        //removes Handlebars.Parser code (used to compile template strings)
+        //set it to `false` if you need template strings even after build
+        excludeHbsParser : true,
+        // kills the entire plugin set once it's built.
         excludeAfterBuild: true
     },
 
