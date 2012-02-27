@@ -93,7 +93,7 @@ Handlebars.registerHelper('log', function(context) {
 });
 ;
 
-//>>excludeStart('excludeAfterBuild', pragmas.excludeAfterBuild)
+//>>excludeStart('excludeHbsParser', pragmas.excludeHbsParser)
 // no need for parser if templates are pre-compiled
 
 // lib/handlebars/compiler/parser.js
@@ -565,7 +565,7 @@ Handlebars.parse = function(string) {
   Handlebars.Parser.yy = Handlebars.AST;
   return Handlebars.Parser.parse(string);
 };
-//>>excludeEnd('excludeAfterBuild')
+//>>excludeEnd('excludeHbsParser')
 
 
 Handlebars.print = function(ast) {
