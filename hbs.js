@@ -18,9 +18,6 @@ define([
  Handlebars, _, precompile, JSON
 //>>excludeEnd('excludeHbs')
 ) {
-// NOTE :: if you want to load template in production outside of the build, either precompile
-// them into modules or take out the conditional build stuff here
-
 //>>excludeStart('excludeHbs', pragmas.excludeHbs)
   var fs, getXhr,
         progIds = ['Msxml2.XMLHTTP', 'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.4.0'],
@@ -29,7 +26,7 @@ define([
         },
         buildMap = [],
         filecode = "w+",
-        templateExtension = ".hbs",
+        templateExtension = "hbs",
         customNameExtension = "@hbs",
         devStyleDirectory = "/demo/styles/",
         buildStyleDirectory = "/demo-build/styles/",
@@ -116,10 +113,6 @@ define([
 
       return {
 
-        setExtension : function (ext) {
-          templateExtension = ext;
-        },
-
         get: function () {
             return Handlebars;
         },
@@ -139,6 +132,7 @@ define([
             
 
             var compiledName = name + customNameExtension,
+                disableI18n = (config.hbs && config.hbs.disableI18n),
                 partialDeps = [];
 
             function recursiveNodeSearch( statements, res ) {
@@ -281,9 +275,7 @@ define([
               };
             }
 
-            var path = parentRequire.toUrl(name + templateExtension);
-            fetchOrGetCached( parentRequire.toUrl('template/i18n/'+(config.locale || "en_us")+'.json'), function (langMap) {
-              langMap = JSON.parse(langMap);
+            function fetchAndRegister(langMap){
               fetchText(path, function (text) {
                   // for some reason it doesn't include hbs _first_ when i don't add it here...
                   var nodes = Handlebars.parse(text),
@@ -365,7 +357,8 @@ define([
                                       "t.vars = " + JSON.stringify(vars) + ";\n";
                   }
 
-                  var prec = precompile( text, _.extend( langMap, config.localeMapping ) );
+                  var mapping = disableI18n? false : _.extend( langMap, config.localeMapping ),
+                      prec = precompile( text, mapping );
                   
                   text = "/* START_TEMPLATE */\n" +
                          "define(['hbs','Handlebars'"+depStr+helpDepStr+"], function( hbs, Handlebars ){ \n" +
@@ -418,7 +411,17 @@ define([
                     });
                   }
               });
-            });
+            }
+
+            var path = parentRequire.toUrl(name +'.'+ (config.hbs && config.hbs.templateExtension? config.hbs.templateExtension : templateExtension));
+
+            if (disableI18n){
+                fetchAndRegister(false);
+            } else {
+                fetchOrGetCached( parentRequire.toUrl('template/i18n/'+(config.locale || "en_us")+'.json'), function (langMap) {
+                  fetchAndRegister(JSON.parse(langMap));
+                });
+            }
           //>>excludeEnd('excludeHbs')
         }
       };

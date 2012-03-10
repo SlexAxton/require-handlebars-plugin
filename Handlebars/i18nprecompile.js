@@ -25,9 +25,14 @@ define(['Handlebars', "underscore"], function ( Handlebars, _ ) {
   }
   
   return function(string, mapping, options) {
-    options         = options || {};
-    var ast         = replaceLocaleStrings(Handlebars.parse(string), mapping),
-        environment = new Handlebars.Compiler().compile(ast, options);
+    options = options || {};
+    var ast, environment;
+    ast = Handlebars.parse(string);
+    // avoid replacing locale if mapping is `false`
+    if (mapping !== false) {
+        ast = replaceLocaleStrings(ast, mapping);
+    }
+    environment = new Handlebars.Compiler().compile(ast, options);
     return new Handlebars.JavaScriptCompiler().compile(environment, options);
   };
 });
