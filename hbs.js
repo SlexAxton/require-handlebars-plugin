@@ -129,7 +129,6 @@ define([
 
         load: function (name, parentRequire, load, config) {
           //>>excludeStart('excludeHbs', pragmas.excludeHbs)
-            
 
             var compiledName = name + customNameExtension,
                 disableI18n = (config.hbs && config.hbs.disableI18n),
@@ -142,6 +141,9 @@ define([
                 }
                 if ( statement && statement.program && statement.program.statements ) {
                   recursiveNodeSearch( statement.program.statements, res );
+                }
+                if ( statement && statement.program && statement.program.inverse && statement.program.inverse.statements ) {
+                  recursiveNodeSearch( statement.program.inverse.statements, res );
                 }
               });
               return res;
