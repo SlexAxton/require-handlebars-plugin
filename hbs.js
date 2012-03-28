@@ -287,7 +287,17 @@ define([
                       vars = extDeps.vars,
                       helps = extDeps.helpers || [],
                       depStr = deps.join("', 'hbs!").replace(/_/g, '/'),
-                      helpDepStr = helps.join("', 'template/helpers/"),
+                      helpDepStr = (function (){
+                        var i, paths = [],
+                            pathGetter = config.hbs && config.hbs.helperPathCallback
+                              ? config.hbs.helperPathCallback
+                              : function (name){return 'template/helpers/' + name;};
+
+                        for ( i = 0; i < helps.length; i++ ) {
+                          paths[i] = "'" + pathGetter(helps[i]) + "'"
+                        }
+                        return paths;
+                      })().join(','),
                       debugOutputStart = "",
                       debugOutputEnd   = "",
                       debugProperties = "",
@@ -298,7 +308,7 @@ define([
                     depStr = ",'hbs!" + depStr + "'";
                   }
                   if ( helpDepStr ) {
-                    helpDepStr = ",'template/helpers/" + helpDepStr + "'";
+                    helpDepStr = "," + helpDepStr;
                   }
 
                   
