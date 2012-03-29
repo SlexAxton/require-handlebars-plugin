@@ -128,6 +128,15 @@ require(['template/helpers/roundNumber'], function ( roundNumber ){
 
 It's just a module that happens to register itself.
 
+You can specify a helper path callback in the config. The callback should be a function that gets a name of a helper as the only argument and returns the full path to be `require()`-d, e.g., the following callback allows for automatic loading of helper modules written in CoffeeScript (via the require-cs plugin) under a non-standard location:
+
+```javascript
+require({
+  hbs : {
+    helperPathCallback: function(name) {return 'cs!/helpers/' + name;}
+  }
+}, ['main'])
+```
 
 # Meta Data
 
