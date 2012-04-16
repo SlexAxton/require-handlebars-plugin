@@ -32,7 +32,7 @@ define([
         buildStyleDirectory = "/demo-build/styles/",
         buildCSSFileName = "screen.build.css";
 
-    if (typeof window !== "undefined" && window.navigator && window.document) {
+    if (typeof window !== "undefined" && window.navigator && window.document && !window.navigator.userAgent.match(/Node.js/)) {
         // Browser action
         getXhr = function () {
             //Would love to dump the ActiveX crap in here. Need IE 6 to die first.
