@@ -195,7 +195,7 @@ As long as all of your paths match up, this should precompile all of your templa
 
 ## So many dependencies in the `hbs` plugin!
 
-I use them for coding happiness. It shouldn't bother you tooooo much, because it all gets built out in production. The `hbs.js` file essentially gets written to the main.js file as a noop (a few empty definitions), and none of it's dependencies are included into the build.
+I use them for coding happiness. It shouldn't bother you tooooo much, because it all gets built out in production. The `hbs.js` file essentially gets written to the main.js file as a noop (a few empty definitions), and none of it's dependencies are included into the build. All the dependencies are inside the `hbs` folder and this folder should be a sibling of the `hbs.js` file.
 
 # Demo
 

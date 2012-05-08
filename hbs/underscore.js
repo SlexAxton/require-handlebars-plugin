@@ -1,3 +1,5 @@
+//>>excludeStart('excludeAfterBuild', pragmas.excludeAfterBuild)
+
 //     Underscore.js 1.3.1
 //     (c) 2009-2012 Jeremy Ashkenas, DocumentCloud Inc.
 //     Underscore is freely distributable under the MIT license.
@@ -999,10 +1001,14 @@
 
   // AMD define happens at the end for compatibility with AMD loaders
   // that don't enforce next-turn semantics on modules.
+  // ----
+  // define as unnamed module so it can be easily removed after build
+  // without affecting other modules
   if (typeof define === 'function' && define.amd) {
-    define('underscore', function() {
+    define(function() {
       return _;
     });
   }
 
 }).call(this);
+//>>excludeEnd('excludeAfterBuild')

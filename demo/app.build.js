@@ -4,37 +4,34 @@
     dir: "../demo-build",
 
     optimizeCss: "standard",
-    //optimize: "none",
+    // optimize: "none",
     // inlining ftw
     inlineText: true,
 
     pragmasOnSave: {
-        //removes Handlebars.Parser code (used to compile template strings)
-        //set it to `false` if you need template strings even after build
+        //removes Handlebars.Parser code (used to compile template strings) set
+        //it to `false` if you need to parse template strings even after build
         excludeHbsParser : true,
         // kills the entire plugin set once it's built.
         excludeHbs: true,
-        //removes i18n precompiler
+        // removes i18n precompiler, handlebars and json2
         excludeAfterBuild: true
     },
 
     paths: {
       "hbs": "../hbs",
       "Handlebars" : "../Handlebars"
+      // if your project is already using underscore.js and you want to keep
+      // the hbs plugin even after build (excludeHbs:false) you should set the
+      // "hbs/underscore" path to point to the shared location like
+      // "hbs/underscore" : "lib/undescore" to avoid loading it twice
     },
 
     locale: "en_ca",
 
     modules: [
-        //Optimize the application files. Exclude jQuery since it is
-        //included already in require-jquery.js
         {
-            name: "main",
-
-            //the hbs plugin requires underscore
-            //the only way to remove it after build is to manually exclude it
-            //if you require underscore, comment out this line
-            exclude: ['underscore']
+            name: "main"
         }
     ]
 })
