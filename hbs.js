@@ -30,6 +30,8 @@ define([
         customNameExtension = "@hbs",
         devStyleDirectory = "/demo/styles/",
         buildStyleDirectory = "/demo-build/styles/",
+        helperDirectory = "template/helpers/",
+        i18nDirectory = "template/i18n/",
         buildCSSFileName = "screen.build.css";
 
     if (typeof window !== "undefined" && window.navigator && window.document && !window.navigator.userAgent.match(/Node.js/)) {
@@ -291,7 +293,7 @@ define([
                         var i, paths = [],
                             pathGetter = config.hbs && config.hbs.helperPathCallback
                               ? config.hbs.helperPathCallback
-                              : function (name){return 'template/helpers/' + name;};
+                              : function (name){return helperDirectory + name;};
 
                         for ( i = 0; i < helps.length; i++ ) {
                           paths[i] = "'" + pathGetter(helps[i]) + "'"
@@ -430,7 +432,7 @@ define([
             if (disableI18n){
                 fetchAndRegister(false);
             } else {
-                fetchOrGetCached( parentRequire.toUrl('template/i18n/'+(config.locale || "en_us")+'.json'), function (langMap) {
+                fetchOrGetCached( parentRequire.toUrl(i18nDirectory+(config.locale || "en_us")+'.json'), function (langMap) {
                   fetchAndRegister(JSON.parse(langMap));
                 });
             }
