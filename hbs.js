@@ -289,7 +289,8 @@ define([
                       vars = extDeps.vars,
                       helps = extDeps.helpers || [],
                       depStr = deps.join("', 'hbs!").replace(/_/g, '/'),
-                      helpDepStr = (function (){
+                      helpDepStr = config.hbs && config.hbs.disableHelpers ?
+                      "" : (function (){
                         var i, paths = [],
                             pathGetter = config.hbs && config.hbs.helperPathCallback
                               ? config.hbs.helperPathCallback
