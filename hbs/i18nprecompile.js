@@ -20,6 +20,10 @@ define(['Handlebars', "./underscore"], function ( Handlebars, _ ) {
           statement.program = replaceLocaleStrings( statement.program, mapping );
         }
       });
+      // Also cover the else blocks
+      if (ast.inverse) {
+        replaceLocaleStrings(ast.inverse, mapping);
+      }
     }
     return ast;
   }
