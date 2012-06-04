@@ -216,6 +216,35 @@ And visit `http://127.0.0.1:8000/demo-build.html` for the production build versi
 
 You should be able to see all of the templates and individual files in your network panel in dev mode, and just 2 minified files in build mode. 
 
+# Config
+
+There are several configurable options, which you can set in your require.config:
+
+```javascript
+require.config({
+  // ... other require config here
+
+  // hbs config
+  hbs: {
+    disableI18n: true,        // This disables the i18n helper and
+                              // doesn't require the json i18n files (e.g. en_us.json)
+                              // (false by default)
+
+    disableHelpers: true,     // When true, won't look for and try to automatically load
+                              // helpers (false by default)
+
+    helperPathCallback:       // Callback to determine the path to look for helpers
+      function (name) {       // ('/template/helpers/'+name by default)
+        return 'cs!' + name;
+      },
+
+    templateExtension: "html" // Set the extension automatically appended to templates
+                              // ('hbs' by default)
+  }
+
+})
+```
+
 # Notes/QA
 
 ## Partial Collision
