@@ -1,7 +1,7 @@
 //>>excludeStart('excludeAfterBuild', pragmas.excludeAfterBuild)
 define(['Handlebars', "./underscore"], function ( Handlebars, _ ) {
 
-  function replaceLocaleStrings ( ast, mapping ) {
+  function replaceLocaleStrings ( ast, mapping, options ) {
     mapping = mapping || {};
     // Base set of things
     if ( ast && ast.type === "program" && ast.statements ) {
@@ -11,7 +11,8 @@ define(['Handlebars', "./underscore"], function ( Handlebars, _ ) {
         if ( statement.type == "mustache" && statement.id && statement.id.original == "$" ) {
           
           if ( statement.params.length && statement.params[0].string ) {
-            newString = mapping[ statement.params[0].string ] || newString;
+            var key = statement.params[0].string;
+            newString = mapping[ key ] || (options.originalKeyFallback? key : newString);
           }
           ast.statements[i] = new Handlebars.AST.ContentNode(newString);
         }
@@ -34,7 +35,7 @@ define(['Handlebars', "./underscore"], function ( Handlebars, _ ) {
     ast = Handlebars.parse(string);
     // avoid replacing locale if mapping is `false`
     if (mapping !== false) {
-        ast = replaceLocaleStrings(ast, mapping);
+        ast = replaceLocaleStrings(ast, mapping, options);
     }
     environment = new Handlebars.Compiler().compile(ast, options);
     return new Handlebars.JavaScriptCompiler().compile(environment, options);
