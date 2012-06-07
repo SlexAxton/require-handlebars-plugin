@@ -18,7 +18,7 @@ define(['Handlebars', "./underscore"], function ( Handlebars, _ ) {
         }
         // If we need to recurse
         else if ( statement.program ) {
-          statement.program = replaceLocaleStrings( statement.program, mapping );
+          statement.program = replaceLocaleStrings( statement.program, mapping, options );
         }
       });
       // Also cover the else blocks
