@@ -373,7 +373,7 @@ define([
                   }
 
                   var mapping = disableI18n? false : _.extend( langMap, config.localeMapping ),
-                      prec = precompile( text, mapping );
+                      prec = precompile( text, mapping, { originalKeyFallback: config.hbs.originalKeyFallback });
                   
                   text = "/* START_TEMPLATE */\n" +
                          "define(['hbs','Handlebars'"+depStr+helpDepStr+"], function( hbs, Handlebars ){ \n" +
