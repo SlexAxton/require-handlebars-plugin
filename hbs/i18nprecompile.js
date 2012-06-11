@@ -23,7 +23,7 @@ define(['Handlebars', "./underscore"], function ( Handlebars, _ ) {
       });
       // Also cover the else blocks
       if (ast.inverse) {
-        replaceLocaleStrings(ast.inverse, mapping);
+        replaceLocaleStrings(ast.inverse, mapping, options);
       }
     }
     return ast;
