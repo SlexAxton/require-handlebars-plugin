@@ -253,13 +253,13 @@ define([
             function getExternalDeps( nodes ) { 
               var res   = [];
               var helpersres = [];
-              
+
               if ( nodes && nodes.statements ) {
                 res = recursiveVarSearch( nodes.statements, [], undefined, helpersres );
               }
 
               var defaultHelpers = ["helperMissing", "blockHelperMissing", "each", "if", "unless", "with"];
-              
+
               return {
                 vars : _(res).chain().unique().map(function(e){
                   if ( e === "" ) {
@@ -306,7 +306,6 @@ define([
                       debugProperties = "",
                       metaObj, head, linkElem;
 
-                  
                   if ( depStr ) {
                     depStr = ",'hbs!" + depStr + "'";
                   }
@@ -314,7 +313,6 @@ define([
                     helpDepStr = "," + helpDepStr;
                   }
 
-                  
                   if ( meta !== "{}" ) {
                     try {
                       metaObj = JSON.parse(meta);
@@ -362,7 +360,7 @@ define([
                       console.log('error injecting styles');
                     } 
                   }
-                  
+
                   if ( ! config.isBuild && ! config.serverRender ) {
                     debugOutputStart = "<!-- START - " + name + " -->";
                     debugOutputEnd = "<!-- END - " + name + " -->";
@@ -373,8 +371,8 @@ define([
                   }
 
                   var mapping = disableI18n? false : _.extend( langMap, config.localeMapping ),
-                      prec = precompile( text, mapping, { originalKeyFallback: config.hbs.originalKeyFallback });
-                  
+                      prec = precompile( text, mapping, { originalKeyFallback: (config.hbs || {}).originalKeyFallback });
+
                   text = "/* START_TEMPLATE */\n" +
                          "define(['hbs','Handlebars'"+depStr+helpDepStr+"], function( hbs, Handlebars ){ \n" +
                            "var t = Handlebars.template(" + prec + ");\n" +
