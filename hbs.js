@@ -294,7 +294,7 @@ define([
                         var i, paths = [],
                             pathGetter = config.hbs && config.hbs.helperPathCallback
                               ? config.hbs.helperPathCallback
-                              : function (name){return (config.hbs && config.hbs.i18nDirectory? config.hbs.helperDirectory : helperDirectory) + name;};
+                              : function (name){return (config.hbs && config.hbs.helperDirectory ? config.hbs.helperDirectory : helperDirectory) + name;};
 
                         for ( i = 0; i < helps.length; i++ ) {
                           paths[i] = "'" + pathGetter(helps[i]) + "'"
@@ -431,7 +431,7 @@ define([
             if (disableI18n){
                 fetchAndRegister(false);
             } else {
-                fetchOrGetCached( parentRequire.toUrl( config.hbs && config.hbs.i18nDirectory? config.hbs.i18nDirectory : i18nDirectory +(config.locale || "en_us")+'.json'), function (langMap) {
+                fetchOrGetCached(parentRequire.toUrl((config.hbs && config.hbs.i18nDirectory ? config.hbs.i18nDirectory : i18nDirectory) + (config.locale || "en_us") + '.json'), function (langMap) {
                   fetchAndRegister(JSON.parse(langMap));
                 });
             }
