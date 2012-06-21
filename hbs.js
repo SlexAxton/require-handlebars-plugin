@@ -222,7 +222,7 @@ define([
                   // grab the params
                   if ( statement.params ) {
                     _(statement.params).forEach(function(param) {
-                      if ( param.origin === 'this' ) {
+                      if ( param.original === 'this' ) {
                         helpersres.push(statement.id.string);
                       }
 
