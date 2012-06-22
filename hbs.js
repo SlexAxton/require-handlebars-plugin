@@ -219,9 +219,15 @@ define([
                     res.push(prefix + statement.id.string);
                   }
 
+                  var paramsWithoutParts = ['this', '.', '..'];
+
                   // grab the params
                   if ( statement.params ) {
-                    _(statement.params).forEach(function(param){
+                    _(statement.params).forEach(function(param) {
+                      if ( _(paramsWithoutParts).contains(param.original) ) {
+                        helpersres.push(statement.id.string);
+                      }
+
                       parts = composeParts( param.parts );
 
                       for(var part in parts ) {
