@@ -331,7 +331,7 @@ define([
                           _(metaObj.styles).forEach(function (style) {
                             if ( !styleMap[style] ) {
                               linkElem = document.createElement('link');
-                              linkElem.href = config.baseUrl + 'styles/' + style + '.css';
+                              linkElem.href = config.baseUrl + devStyleDirectory + style + '.css';
                               linkElem.media = 'all';
                               linkElem.rel = 'stylesheet';
                               linkElem.type = 'text/css';
