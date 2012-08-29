@@ -1,0 +1,21 @@
+{
+  "name": "require-handlebars-plugin",
+  "version": "0.2.1",
+  "author": "Alex Sexton <alexsexton@gmail.com>",
+  "description": "A plugin for handlebars in require.js",
+  "repository": {
+    "type": "git",
+    "url": "https://SlexAxton@github.com/SlexAxton/require-handlebars-plugin.git"
+  },
+  "license": "To Use: WTFPL, To Contribute: Dojo CLA",
+  "main": "hbs",
+  "volo": {
+    "type": "directory",
+    "dependencies": {
+      "Handlebars": "https://raw.github.com/SlexAxton/require-handlebars-plugin/master/Handlebars.js"
+    }
+  },
+  "scripts": {
+    "install": "volo add"
+  }
+}
