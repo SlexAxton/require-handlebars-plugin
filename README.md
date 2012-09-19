@@ -2,15 +2,15 @@
 
 ## Version
 
-Handlebars : `v1.0.beta.4`
+Handlebars : `v1.0.beta.6`
 
-hbs.js     : `v0.2.1`
+hbs.js     : `v0.3.1`
 
 ## Requirements
 
 Should work in both the java and node build environments.
 
-Require.js >= 0.27.0 (I recommend 1.0.2+)
+Require.js >= 1.x.x (I recommend 2+)
 
 ## Usage
 
