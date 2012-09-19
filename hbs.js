@@ -8,7 +8,7 @@
 /* Yes, deliciously evil. */
 /*jslint evil: true, strict: false, plusplus: false, regexp: false */
 /*global require: false, XMLHttpRequest: false, ActiveXObject: false,
-define: false, process: false, window: false */  
+define: false, process: false, window: false */
 define([
 //>>excludeStart('excludeHbs', pragmas.excludeHbs)
 'handlebars', 'underscore', 'i18nprecompile', 'json2'
@@ -28,7 +28,7 @@ define([
         filecode = "w+",
         templateExtension = "hbs",
         customNameExtension = "@hbs",
-        devStyleDirectory = "/demo/styles/",
+        devStyleDirectory = "/styles/",
         buildStyleDirectory = "/demo-build/styles/",
         helperDirectory = "template/helpers/",
         i18nDirectory = "template/i18n/",
@@ -256,7 +256,7 @@ define([
             }
 
             // This finds the Helper dependencies since it's soooo similar
-            function getExternalDeps( nodes ) { 
+            function getExternalDeps( nodes ) {
               var res   = [];
               var helpersres = [];
 
@@ -346,7 +346,7 @@ define([
                                 str = _(metaObj.styles).map(function (style) {
                                   if (!styleMap[style]) {
                                     styleMap[style] = true;
-                                    return "@import url("+buildStyleDirectory+style+".css);\n";
+                                    return "@import url("+style+".css);\n";
                                   }
                                   return "";
                                 }).join("\n");
@@ -364,7 +364,7 @@ define([
                     }
                     catch(e){
                       console.log('error injecting styles');
-                    } 
+                    }
                   }
 
                   if ( ! config.isBuild && ! config.serverRender ) {

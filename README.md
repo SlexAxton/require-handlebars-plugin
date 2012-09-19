@@ -201,13 +201,20 @@ I use them for coding happiness. It shouldn't bother you tooooo much, because it
 
 To run the demo, go into the root directory of this project and run the following command.
 
-`node r.js -o demo/app.build.js`
+`./build.sh`
 
 This requires that node.js is installed. To see these in your browser, I'd suggest serving them quickly with the python simple server. (Linux/OSX assumed here, but there is a java implementation of the require.js build that should work just as well as the node version. I have not tried it though.)
 
 ```sh
 cd ~/require-handlebars-plugin
 python -m SimpleHTTPServer
+```
+
+You could also use the node 'serve' module.
+
+```sh
+npm install serve -g
+serve .
 ```
 
 Then visit `http://127.0.0.1:8000/demo.html` for the dev version.
