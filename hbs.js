@@ -165,7 +165,7 @@ define([
               var statement, res, test;
               if ( nodes && nodes.statements ) {
                 statement = nodes.statements[0];
-                if ( statement.type === "comment" ) {
+                if ( statement && statement.type === "comment" ) {
                   try {
                     res = ( statement.comment ).replace(new RegExp('^[\\s]+|[\\s]+$', 'g'), '');
                     test = JSON.parse(res);
