@@ -4,7 +4,7 @@
 
 Handlebars : `v1.0.rc.1`
 
-hbs.js     : `v0.3.2`
+hbs.js     : `v0.3.3`
 
 ## Requirements
 

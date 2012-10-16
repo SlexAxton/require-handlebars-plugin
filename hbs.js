@@ -222,7 +222,7 @@ define([
                     res.push(prefix + statement.id.string);
                   }
 
-                  var paramsWithoutParts = ['this', '.', '..'];
+                  var paramsWithoutParts = ['this', '.', '..', './..', '../..', '../../..'];
 
                   // grab the params
                   if ( statement.params ) {
@@ -252,6 +252,9 @@ define([
                 // if it's a whole new program
                 if ( statement && statement.program && statement.program.statements ) {
                   sideways = recursiveVarSearch([statement.mustache],[], "", helpersres)[0] || "";
+                  if ( statement.program.inverse && statement.program.inverse.statements ) {
+                    recursiveVarSearch( statement.program.inverse.statements, res, prefix + newprefix + (sideways ? (prefix+newprefix) ? "."+sideways : sideways : ""), helpersres);
+                  }
                   recursiveVarSearch( statement.program.statements, res, prefix + newprefix + (sideways ? (prefix+newprefix) ? "."+sideways : sideways : ""), helpersres);
                 }
               });

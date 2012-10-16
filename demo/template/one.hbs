@@ -6,11 +6,25 @@
 }
 }}
 <div class="best class ever">
-  This plugin is my {{ adjective }} plugin ever.
 
+  {{! Do a little bit of unecessary logic in here
+  to show that it works with block helpers
+  and iterators }}
+
+  {{#if "1"}}
+  This plugin is my {{ adjective }} plugin ever.
+  {{/if}}
+  <br />
   <br />
 
-  Seriously, {{yeller adjective}}
+  {{#each listofstuff}}
+    {{#if doesntexist}}
+      cant get here
+    {{else}}
+      {{yeller .}}
+      <br />
+    {{/if}}
+  {{/each}}
   <br />
 
   {{> template_coolPartial }}

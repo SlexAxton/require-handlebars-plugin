@@ -4,6 +4,7 @@ define(['hbs!template/one'], function (tmplOne) {
   var container = document.getElementById('demo-app-container');
   // Run your template function, and inject it.
   container.innerHTML = tmplOne({
-    adjective : 'favorite'
+    adjective : 'favorite',
+    listofstuff : ['bananas', 'democracy', 'expired milk']
   });
 });
