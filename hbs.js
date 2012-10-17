@@ -1,5 +1,5 @@
 /**
- * @license handlebars hbs 0.2.1 - Alex Sexton, but Handlebars has it's own licensing junk
+ * @license handlebars hbs 0.4.0 - Alex Sexton, but Handlebars has it's own licensing junk
  *
  * Available via the MIT or new BSD license.
  * see: http://github.com/jrburke/require-cs for details on the plugin this was based off of
@@ -130,7 +130,7 @@ define([
             }
         },
 
-        version: '1.0.3beta',
+        version: '0.4.0',
 
         load: function (name, parentRequire, load, config) {
           //>>excludeStart('excludeHbs', pragmas.excludeHbs)
@@ -415,23 +415,23 @@ define([
 
                   if ( !config.isBuild ) {
                     require( deps, function (){
-                      load.fromText(compiledName, text);
+                      load.fromText(text);
 
                       //Give result to load. Need to wait until the module
                       //is fully parse, which will happen after this
                       //execution.
-                      parentRequire([compiledName], function (value) {
+                      parentRequire([name], function (value) {
                         load(value);
                       });
                     });
                   }
                   else {
-                    load.fromText(compiledName, text);
+                    load.fromText(text);
 
                     //Give result to load. Need to wait until the module
                     //is fully parse, which will happen after this
                     //execution.
-                    parentRequire([compiledName], function (value) {
+                    parentRequire([name], function (value) {
                       load(value);
                     });
                   }
