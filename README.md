@@ -10,7 +10,7 @@ hbs.js     : `v0.4.0`
 
 Should work in both the java and node build environments.
 
-Require.js >= 1.x.x (I recommend 2+)
+Require.js >= 2.1.x (The last tag to work for Require < 2.1 is the `0.3.3` tag)
 
 ## Usage
 
