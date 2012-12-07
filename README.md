@@ -221,7 +221,7 @@ Then visit `http://127.0.0.1:8000/demo.html` for the dev version.
 
 And visit `http://127.0.0.1:8000/demo-build.html` for the production build version.
 
-You should be able to see all of the templates and individual files in your network panel in dev mode, and just 2 minified files in build mode. 
+You should be able to see all of the templates and individual files in your network panel in dev mode, and just 2 minified files in build mode.
 
 # Config
 
@@ -247,6 +247,8 @@ require.config({
 
     templateExtension: "html" // Set the extension automatically appended to templates
                               // ('hbs' by default)
+
+    compileOptions: {}        // options object which is passed to Handlebars compiler
   }
 
 })
@@ -256,7 +258,7 @@ require.config({
 
 ## Partial Collision
 
-This plugin registers every single template as a partial with it's modified module name (Slashes replaced with underscores, and no file extension). 
+This plugin registers every single template as a partial with it's modified module name (Slashes replaced with underscores, and no file extension).
 
 `App/Template/One.handlebars` is registered as `App_Template_One`
 
