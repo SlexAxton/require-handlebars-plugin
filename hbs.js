@@ -444,7 +444,13 @@ define([
               });
             }
 
-            var path = parentRequire.toUrl(name +'.'+ (config.hbs && config.hbs.templateExtension? config.hbs.templateExtension : templateExtension));
+            var path,
+                omitExtension = config.hbs && config.hbs.templateExtension === false;
+            if(omitExtension) {
+              path = parentRequire.toUrl(name);
+            } else {
+              path = parentRequire.toUrl(name +'.'+ (config.hbs && config.hbs.templateExtension ? config.hbs.templateExtension : templateExtension));
+            }
 
             if (disableI18n){
                 fetchAndRegister(false);
