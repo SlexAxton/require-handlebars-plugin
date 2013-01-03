@@ -309,7 +309,7 @@ define([
                               : function (name){return (config.hbs && config.hbs.helperDirectory ? config.hbs.helperDirectory : helperDirectory) + name;};
 
                         for ( i = 0; i < helps.length; i++ ) {
-                          paths[i] = "'" + pathGetter(helps[i]) + "'"
+                          paths[i] = "'" + pathGetter(helps[i], path) + "'"
                         }
                         return paths;
                       })().join(','),
