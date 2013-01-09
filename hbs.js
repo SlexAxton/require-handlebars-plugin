@@ -34,6 +34,10 @@ define([
         i18nDirectory = "template/i18n/",
         buildCSSFileName = "screen.build.css";
 
+    Handlebars.registerHelper('$', function() {
+        //placeholder for translation helper
+    });
+
     if (typeof window !== "undefined" && window.navigator && window.document && !window.navigator.userAgent.match(/Node.js/)) {
         // Browser action
         getXhr = function () {
@@ -225,9 +229,13 @@ define([
                   var paramsWithoutParts = ['this', '.', '..', './..', '../..', '../../..'];
 
                   // grab the params
-                  if ( statement.params ) {
+                  if ( statement.params && typeof Handlebars.helpers[statement.id.string] === 'undefined') {
                     _(statement.params).forEach(function(param) {
-                      if ( _(paramsWithoutParts).contains(param.original) ) {
+                      if ( _(paramsWithoutParts).contains(param.original) 
+                         || param instanceof Handlebars.AST.StringNode 
+                        || param instanceof Handlebars.AST.IntegerNode
+                        || param instanceof Handlebars.AST.BooleanNode
+                        ) {
                         helpersres.push(statement.id.string);
                       }
 
