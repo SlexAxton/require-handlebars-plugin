@@ -14,5 +14,11 @@
     "dependencies": {
       "Handlebars": "https://raw.github.com/SlexAxton/require-handlebars-plugin/master/Handlebars.js"
     }
+  },
+  "jam": {
+  	"name": "hbs",
+  	"dependencies": {
+  	  "handlebars": null
+  	}
   }
 }
