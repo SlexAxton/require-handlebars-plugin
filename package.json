@@ -16,6 +16,9 @@
     }
   },
   "jam": {
-  	"name": "hbs"
+  	"name": "hbs",
+  	"dependencies": {
+  	  "handlebars": null
+  	}
   }
 }
