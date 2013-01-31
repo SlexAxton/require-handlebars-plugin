@@ -73,6 +73,8 @@ YAY!
 
 # I18n
 
+**Note for [jam](http://jamjs.org/) users**: i18n is not currently supported in `jam compile` due to configuration issues. This is being worked on.
+
 I added a build-time/run-time helper for internationalization. The best way to see how this works is the demo.
 
 Right now, the syntax for this is the same as handlebars helper syntax, with a helper named `$` (for brevity).
