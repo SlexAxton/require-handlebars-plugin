@@ -463,9 +463,24 @@ define([
             if (disableI18n){
                 fetchAndRegister(false);
             } else {
-                fetchOrGetCached(parentRequire.toUrl((config.hbs && config.hbs.i18nDirectory ? config.hbs.i18nDirectory : i18nDirectory) + (config.locale || "en_us") + '.json'), function (langMap) {
-                  fetchAndRegister(JSON.parse(langMap));
-                });
+            	// Workaround until jam is able to pass config info or we move i18n to a separate module.
+            	// This logs a warning and disables i18n if there's an error loading the language file
+            	var langMapPath = (config.hbs && config.hbs.i18nDirectory ? config.hbs.i18nDirectory : i18nDirectory) + (config.locale || "en_us") + '.json';
+            	try {
+					fetchOrGetCached(parentRequire.toUrl(langMapPath), function (langMap) {
+					  fetchAndRegister(JSON.parse(langMap));
+					});
+                } catch(er) {
+                	// if there's no configuration at all, log a warning and disable i18n for this and subsequent templates
+                	if(!config.hbs) {
+                		console.warn('hbs: Error reading ' + langMapPath + ', disabling i18n. Ignore this if you\'re using jam, otherwise check your i18n configuration.\n');
+						config.hbs = {disableI18n: true};
+                		fetchAndRegister(false);
+                	} else {
+                		throw er;
+                	
+                	}
+                }
             }
           //>>excludeEnd('excludeHbs')
         }
