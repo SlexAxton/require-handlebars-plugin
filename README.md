@@ -270,14 +270,6 @@ I'd encourage you to _not_ call registerPartials in your code, and just use the 
 
 In dev mode, loading the templates requires that you are on the same domain as your templates. This is standard same origin policy stuff. Once you build, though, it won't matter since there are no additional requests. Usually a few cleverly placed host overrides get you through the dev mode hurdles.
 
-## My helper isn't working
-
-Unfortunately my logic forces a circular dependency right now. The work-around is to add your helper to `template/helpers/all.js` much like the file that is in the demo. When a work-around is found, I'll update that and get it out. This could also be a 'watched' folder and a generated 'all.js' file. Note:: the all.js goes away in the build, so no worries on production size and unneeded helpers.
-
-## Doesn't work with my version of Handlebars
-
-This is a barely modified version of handlebars 1.0.beta.4 (which _still_ went out to the world with a non-updated version tag 1.0.2beta, whoops). Some of the functionality in here is new, but none of it should be specific exactly to what makes this work. Though, I did take out the code that tries to identify node.js and act differently, since we want it to be picked up by `require.js` and not the built-in node.js `require` keyword. I also turned it into a proper amd module, which makes it "require-able". There's nothing too crazy, though, so I'd suggest just using it to save yourself time. Or don't.
-
 # Other Templating Languages
 
 _Very_ little of this is specific to handlebars, but things are just a _tiny_ bit too specific about how everything works to properly generalize this.
