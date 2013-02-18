@@ -146,7 +146,7 @@ define([
             function recursiveNodeSearch( statements, res ) {
               _(statements).forEach(function ( statement ) {
                 if ( statement && statement.type && statement.type === 'partial' ) {
-                    res.push(statement.id.string);
+                    res.push(statement.partialName.name);
                 }
                 if ( statement && statement.program && statement.program.statements ) {
                   recursiveNodeSearch( statement.program.statements, res );
