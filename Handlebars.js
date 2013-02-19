@@ -839,7 +839,7 @@ Handlebars.Utils = {
   isEmpty: function(value) {
     if (!value && value !== 0) {
       return true;
-    } else if(toString.call(value) === "[object Array]" && value.length === 0) {
+    } else if(Object.prototype.toString.call(value) === "[object Array]" && value.length === 0) {
       return true;
     } else {
       return false;
