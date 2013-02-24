@@ -1,5 +1,5 @@
 /**
- * @license handlebars hbs 0.4.0 - Alex Sexton, but Handlebars has it's own licensing junk
+ * @license Handlebars hbs 0.4.0 - Alex Sexton, but Handlebars has it's own licensing junk
  *
  * Available via the MIT or new BSD license.
  * see: http://github.com/jrburke/require-cs for details on the plugin this was based off of
@@ -11,7 +11,7 @@
 define: false, process: false, window: false */
 define([
 //>>excludeStart('excludeHbs', pragmas.excludeHbs)
-'./handlebars', './hbs/underscore', './hbs/i18nprecompile', './hbs/json2'
+'./Handlebars', './hbs/underscore', './hbs/i18nprecompile', './hbs/json2'
 //>>excludeEnd('excludeHbs')
 ], function (
 //>>excludeStart('excludeHbs', pragmas.excludeHbs)
@@ -231,8 +231,8 @@ define([
                   // grab the params
                   if ( statement.params && typeof Handlebars.helpers[statement.id.string] === 'undefined') {
                     _(statement.params).forEach(function(param) {
-                      if ( _(paramsWithoutParts).contains(param.original) 
-                         || param instanceof Handlebars.AST.StringNode 
+                      if ( _(paramsWithoutParts).contains(param.original)
+                         || param instanceof Handlebars.AST.StringNode
                         || param instanceof Handlebars.AST.IntegerNode
                         || param instanceof Handlebars.AST.BooleanNode
                         ) {
@@ -396,7 +396,7 @@ define([
                       prec = precompile( text, mapping, options);
 
                   text = "/* START_TEMPLATE */\n" +
-                         "define(['hbs','handlebars'"+depStr+helpDepStr+"], function( hbs, Handlebars ){ \n" +
+                         "define(['hbs','Handlebars'"+depStr+helpDepStr+"], function( hbs, Handlebars ){ \n" +
                            "var t = Handlebars.template(" + prec + ");\n" +
                            "Handlebars.registerPartial('" + name.replace( /\//g , '_') + "', t);\n" +
                            debugProperties +
@@ -478,7 +478,7 @@ define([
                 		fetchAndRegister(false);
                 	} else {
                 		throw er;
-                	
+
                 	}
                 }
             }
