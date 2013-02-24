@@ -18,7 +18,7 @@
   "jam": {
   	"name": "hbs",
   	"dependencies": {
-  	  "handlebars": null
+  	  "Handlebars": null
   	}
   }
 }

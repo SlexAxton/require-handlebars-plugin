@@ -1,4 +1,4 @@
-define(['handlebars'], function ( Handlebars ){
+define(['Handlebars'], function ( Handlebars ){
   function yeller ( context, options ) {
     // Assume it's a string for simplicity.
     return context + "!!!!!!oneone!!one1";
