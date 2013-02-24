@@ -122,7 +122,7 @@ Then in your templates, you can just do:
 The system will make sure these modules are pulled in automatically from that directory. But if in your app, you need a rounding module (perhaps in a view/datanormalization place), you could do this:
 
 ```javascript
-require(['template/helpers/roundNumber'], function ( roundNumber ){
+require(['template/helpers/roundNumber'], function ( roundNumber ) {
   var threeFourths = (3/4);
   alert( roundNumber( threeFourths ));
 });

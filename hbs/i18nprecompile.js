@@ -1,5 +1,5 @@
 //>>excludeStart('excludeAfterBuild', pragmas.excludeAfterBuild)
-define(['../handlebars', "./underscore"], function ( Handlebars, _ ) {
+define(['../Handlebars', "./underscore"], function ( Handlebars, _ ) {
 
   function replaceLocaleStrings ( ast, mapping, options ) {
     options = options || {};
@@ -9,7 +9,7 @@ define(['../handlebars', "./underscore"], function ( Handlebars, _ ) {
       _(ast.statements).forEach(function(statement, i){
         var newString = "<!-- i18n error -->";
         // If it's a translation node
-        if ( statement.type == "mustache" && statement.id && statement.id.original == "$" ) {
+        if ( statement.type === "mustache" && statement.id && statement.id.original === "$" ) {
 
           if ( statement.params.length && statement.params[0].string ) {
             var key = statement.params[0].string;
