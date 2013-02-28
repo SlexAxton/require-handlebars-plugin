@@ -307,9 +307,23 @@ define([
                       meta = getMetaData( nodes ),
                       extDeps = getExternalDeps( nodes ),
                       vars = extDeps.vars,
-                      helps = extDeps.helpers || [],
+                      helps = (extDeps.helpers || []),
                       depStr = deps.join("', 'hbs!").replace(/_/g, '/'),
-                      helpDepStr = config.hbs && config.hbs.disableHelpers ?
+                      debugOutputStart = "",
+                      debugOutputEnd   = "",
+                      debugProperties = "",
+                      helpDepStr, metaObj, head, linkElem;
+
+                  if(meta !== "{}") {
+                    try {
+                      metaObj = JSON.parse(meta);
+                    } catch(e) {
+                      console.log("couldn't parse meta for %s", path);
+                    }
+                  }
+
+                  helps = helps.concat(metaObj.helpers || []);
+                  helpDepStr = config.hbs && config.hbs.disableHelpers ?
                       "" : (function (){
                         var i, paths = [],
                             pathGetter = config.hbs && config.hbs.helperPathCallback
@@ -320,11 +334,7 @@ define([
                           paths[i] = "'" + pathGetter(helps[i], path) + "'"
                         }
                         return paths;
-                      })().join(','),
-                      debugOutputStart = "",
-                      debugOutputEnd   = "",
-                      debugProperties = "",
-                      metaObj, head, linkElem;
+                      })().join(',');
 
                   if ( depStr ) {
                     depStr = ",'hbs!" + depStr + "'";
@@ -333,10 +343,9 @@ define([
                     helpDepStr = "," + helpDepStr;
                   }
 
-                  if ( meta !== "{}" ) {
+                  if (metaObj) {
                     try {
-                      metaObj = JSON.parse(meta);
-                      if ( metaObj && metaObj.styles ) {
+                      if (metaObj.styles) {
                         styleList = _.union(styleList, metaObj.styles);
 
                         // In dev mode in the browser

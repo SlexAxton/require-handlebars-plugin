@@ -2,10 +2,17 @@
 {
   "name" : "one",
   "decription" : "A Demo Template",
-  "styles" : ["one"]
+  "styles" : ["one"],
+  "helpers": ["myhelper"]
 }
 }}
 <div class="best class ever">
+
+  {{#myhelper}}
+  Wow
+  {{else}}
+  Nope
+  {{/myhelper}}
 
   {{! Do a little bit of unecessary logic in here
   to show that it works with block helpers
