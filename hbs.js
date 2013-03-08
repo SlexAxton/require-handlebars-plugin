@@ -416,9 +416,8 @@ define([
                       text += "\r\n//@ sourceURL=" + path;
                   }
                   /*@end@*/
-
                   for ( var i in deps ) {
-                    if ( deps.hasOwnProperty(i) ) {
+                    if ( deps.hasOwnProperty(i) && deps[ i ].length !== 0 ) {
                       deps[ i ] = 'hbs!' + deps[ i ].replace(/_/g, '/');
                     }
                   }
