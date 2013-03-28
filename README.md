@@ -14,7 +14,7 @@ Require.js >= 2.1.x (The last tag to work for Require < 2.1 is the `0.3.3` tag)
 
 ## Usage
 
-Write a template ( path: `App/Template/One.handlebars` ):
+Write a template ( path: `App/Template/One.hbs` ):
 
 ```html
 <div class="best plugin ever">
@@ -28,7 +28,7 @@ Write a template ( path: `App/Template/One.handlebars` ):
 </div>
 ```
 
-Here's the partial (optional) ( path : `App/Template/CoolPartial.handlebars` )
+Here's the partial (optional) ( path : `App/Template/CoolPartial.hbs` )
 
 ```html
 <div>
@@ -43,8 +43,8 @@ Include the `hbs.js` plugin and the `Handlebars.js` file in the same directory a
 ~/Code/scripts/require.js
 ~/Code/scripts/hbs.js
 ~/Code/scripts/Handlebars.js
-~/Code/scripts/App/Template/One.handlebars
-~/Code/scripts/App/Template/CoolPartial.handlebars
+~/Code/scripts/App/Template/One.hbs
+~/Code/scripts/App/Template/CoolPartial.hbs
 ```
 
 Then require your templates like so:
