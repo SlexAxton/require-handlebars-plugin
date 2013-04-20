@@ -86,7 +86,7 @@ define([
           var dom  = url.substr(uidx).split("/").shift();
           var msie = getIEVersion();
           var xdm  = ( dom != window.location.href.substr(hidx).split("/").shift() ) && (msie > -1);
-              xdm  = (msie >= 7) && (msie < 10);
+              xdm  = (msie >= 7);
           if( xdm )
           {
              var xdr = getXhr(true);
