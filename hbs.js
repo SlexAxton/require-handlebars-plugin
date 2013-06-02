@@ -445,10 +445,6 @@ define([
                       load(value);
                     });
                   }
-
-                  if ( config.removeCombined ) {
-                    fs.unlinkSync(path);
-                  }
               });
             }
 
