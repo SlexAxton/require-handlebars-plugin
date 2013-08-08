@@ -30,6 +30,12 @@
       // "hbs/underscore" : "lib/underscore" to avoid loading it twice
     },
 
+    shim: {
+      'Handlebars': {
+        'exports': 'Handlebars'
+      }
+    },
+
     locale: "en_ca",
 
     // default plugin settings, listing here just as a reference

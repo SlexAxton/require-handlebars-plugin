@@ -2,7 +2,7 @@
 
 ## Version
 
-Handlebars : `v1.0.rc.1`
+Handlebars : `v1.0.0`
 
 hbs.js     : `v0.4.0`
 
