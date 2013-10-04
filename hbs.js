@@ -418,7 +418,7 @@ define([
                   /*@end@*/
 
                   for ( var i in deps ) {
-                    if ( deps.hasOwnProperty(i) ) {
+                    if ( deps.hasOwnProperty(i) && typeof deps[i] === 'string') {  // make sure string, because we're iterating over all props
                       deps[ i ] = 'hbs!' + deps[ i ].replace(/_/g, '/');
                     }
                   }
