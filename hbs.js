@@ -179,7 +179,7 @@ define([
                     return res;
                   }
                   catch (e) {
-                    return "{}";
+                    return "{ \"description\" : \"" + statement.comment + "\" }";
                   }
                 }
               }
