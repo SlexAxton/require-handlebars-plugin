@@ -44,7 +44,7 @@ define([
             //Would love to dump the ActiveX crap in here. Need IE 6 to die first.
             var xhr, i, progId;
             if (typeof XMLHttpRequest !== "undefined") {
-                return new XMLHttpRequest();
+               return ((arguments[0] === true)) ? new XDomainRequest() : new XMLHttpRequest();
             } else {
                 for (i = 0; i < 3; i++) {
                     progId = progIds[i];
@@ -66,7 +66,41 @@ define([
             return xhr;
         };
 
+        // Returns the version of Windows Internet Explorer or a -1
+        // (indicating the use of another browser).
+        getIEVersion = function(){
+           var rv = -1; // Return value assumes failure.
+           if (navigator.appName == 'Microsoft Internet Explorer')
+           {
+              var ua = navigator.userAgent;
+              var re  = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+              if (re.exec(ua) != null)
+                 rv = parseFloat( RegExp.$1 );
+           }
+           return rv;
+        };
+
         fetchText = function (url, callback) {
+          var uidx = (url.substr(0,5)==="https") ? 8 : 7;
+          var hidx = (window.location.href.substr(0,5)==="https") ? 8 : 7;
+          var dom  = url.substr(uidx).split("/").shift();
+          var msie = getIEVersion();
+          var xdm  = ( dom != window.location.href.substr(hidx).split("/").shift() ) && (msie > -1);
+              xdm  = (msie >= 7);
+          if( xdm )
+          {
+             var xdr = getXhr(true);
+            xdr.open('GET', url);
+            xdr.onload = function(){
+              callback(xdr.responseText);
+            };
+            xdr.onprogress = function(){};
+            xdr.ontimeout = function(){};
+            xdr.onerror = function(){};
+            setTimeout( function(){ xdr.send(); }, 0 );
+          }
+          else
+          {
             var xhr = getXhr();
             xhr.open('GET', url, true);
             xhr.onreadystatechange = function (evt) {
@@ -77,6 +111,7 @@ define([
                 }
             };
             xhr.send(null);
+          }
         };
 
     } else if (typeof process !== "undefined" &&
