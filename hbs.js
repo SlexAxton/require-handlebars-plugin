@@ -393,10 +393,11 @@ define([
                   var mapping = disableI18n? false : _.extend( langMap, config.localeMapping ),
                       configHbs = config.hbs || {},
                       options = _.extend(configHbs.compileOptions || {}, { originalKeyFallback: configHbs.originalKeyFallback }),
-                      prec = precompile( text, mapping, options);
+                      prec = precompile( text, mapping, options),
+                      tmplName = config.isBuild ? '' : "'" + name + "',";
 
                   text = "/* START_TEMPLATE */\n" +
-                         "define(['hbs','Handlebars'"+depStr+helpDepStr+"], function( hbs, Handlebars ){ \n" +
+                         "define("+tmplName+"['hbs','Handlebars'"+depStr+helpDepStr+"], function( hbs, Handlebars ){ \n" +
                            "var t = Handlebars.template(" + prec + ");\n" +
                            "Handlebars.registerPartial('" + name.replace( /\//g , '_') + "', t);\n" +
                            debugProperties +
