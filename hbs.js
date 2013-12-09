@@ -382,7 +382,7 @@ define([
             }
           }
 
-          helps = helps.concat(metaObj.helpers || []);
+          helps = helps.concat((metaObj && metaObj.helpers) ? metaObj.helpers : []);
           helpDepStr = config.hbs && config.hbs.disableHelpers ?
             '' : (function (){
               var i;
