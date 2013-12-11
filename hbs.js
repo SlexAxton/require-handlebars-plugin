@@ -11,7 +11,7 @@
 define: false, process: false, window: false */
 define([
 //>>excludeStart('excludeHbs', pragmas.excludeHbs)
-  'Handlebars', 'underscore', 'i18nprecompile', 'json2'
+  'hbs/handlebars', 'hbs/underscore', 'hbs/i18nprecompile', 'hbs/json2'
 //>>excludeEnd('excludeHbs')
 ], function (
 //>>excludeStart('excludeHbs', pragmas.excludeHbs)
@@ -363,16 +363,20 @@ define([
         fetchText(path, function(text) {
           // for some reason it doesn't include hbs _first_ when i don't add it here...
           var nodes = Handlebars.parse(text);
-          var deps = findPartialDeps( nodes );
+          var partials = findPartialDeps( nodes );
           var meta = getMetaData( nodes );
           var extDeps = getExternalDeps( nodes );
           var vars = extDeps.vars;
           var helps = (extDeps.helpers || []);
-          var depStr = deps.join("', 'hbs!").replace(/_/g, '/');
           var debugOutputStart = '';
           var debugOutputEnd   = '';
           var debugProperties = '';
-          var helpDepStr, metaObj, head, linkElem;
+          var deps = [];
+          var depStr, helpDepStr, metaObj, head, linkElem;
+          var partialName = name.substr(name.lastIndexOf('/')+1);
+          var baseDir = name.substr(0,name.lastIndexOf('/')+1);
+
+          require.config.hbs = require.config.hbs || {};
 
           if(meta !== '{}') {
             try {
@@ -382,7 +386,17 @@ define([
             }
           }
 
-          helps = helps.concat(metaObj.helpers || []);
+          for ( var i in partials ) {
+            if ( partials.hasOwnProperty(i) && typeof partials[i] === 'string') {  // make sure string, because we're iterating over all props
+              partialName = partials[i];
+              require.config.hbs.templatesDir = baseDir;
+              deps[ i ] = 'hbs!'+ baseDir + partials[ i ];
+            }
+          }
+
+          depStr = deps.join("', 'hbs!");
+
+          helps = helps.concat((metaObj && metaObj.helpers) ? metaObj.helpers : []);
           helpDepStr = config.hbs && config.hbs.disableHelpers ?
             '' : (function (){
               var i;
@@ -399,9 +413,6 @@ define([
               return paths;
             })().join(',');
 
-          if ( depStr ) {
-            depStr = ",'hbs!" + depStr + "'";
-          }
           if ( helpDepStr ) {
             helpDepStr = ',' + helpDepStr;
           }
@@ -468,15 +479,18 @@ define([
           var prec = precompile( text, mapping, options);
           var tmplName = config.isBuild ? '' : "'" + name + "',";
 
+          if(depStr) depStr = ", '"+depStr+"'";
+
+          var partialName = name.replace(require.config.hbs.templatesDir, '');
+
           text = '/* START_TEMPLATE */\n' +
-                 'define('+tmplName+"['hbs','Handlebars'"+depStr+helpDepStr+'], function( hbs, Handlebars ){ \n' +
+                 'define('+tmplName+"['hbs','hbs/handlebars'"+depStr+helpDepStr+'], function( hbs, Handlebars ){ \n' +
                    'var t = Handlebars.template(' + prec + ');\n' +
-                   "Handlebars.registerPartial('" + name.replace( /\//g , '_') + "', t);\n" +
+                   "Handlebars.registerPartial('" + partialName + "', t);\n" +
                    debugProperties +
                    'return t;\n' +
                  '});\n' +
                  '/* END_TEMPLATE */\n';
-
           //Hold on to the transformed text if a build.
           if (config.isBuild) {
             buildMap[compiledName] = text;
@@ -489,12 +503,6 @@ define([
             text += '\r\n//@ sourceURL=' + path;
           }
           /*@end@*/
-
-          for ( var i in deps ) {
-            if ( deps.hasOwnProperty(i) && typeof deps[i] === 'string') {  // make sure string, because we're iterating over all props
-              deps[ i ] = 'hbs!' + deps[ i ].replace(/_/g, '/');
-            }
-          }
 
           if ( !config.isBuild ) {
             require( deps, function (){
