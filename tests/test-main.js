@@ -5,7 +5,7 @@ for (var file in window.__karma__.files) {
       tests.push(file);
     }
   }
-}
+};
 
 requirejs.config({
 

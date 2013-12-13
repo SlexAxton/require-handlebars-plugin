@@ -377,6 +377,7 @@ define([
           var baseDir = name.substr(0,name.lastIndexOf('/')+1);
 
           require.config.hbs = require.config.hbs || {};
+          require.config.hbs._partialsBaseDir = require.config.hbs._partialsBaseDir || {};
 
           if(meta !== '{}') {
             try {
@@ -389,7 +390,7 @@ define([
           for ( var i in partials ) {
             if ( partials.hasOwnProperty(i) && typeof partials[i] === 'string') {  // make sure string, because we're iterating over all props
               partialName = partials[i];
-              require.config.hbs.templatesDir = baseDir;
+              require.config.hbs._partialsBaseDir[baseDir+partialName] = baseDir;
               deps[ i ] = 'hbs!'+ baseDir + partials[ i ];
             }
           }
@@ -481,7 +482,7 @@ define([
 
           if(depStr) depStr = ", '"+depStr+"'";
 
-          var partialName = name.replace(require.config.hbs.templatesDir, '');
+          var partialName = name.replace(require.config.hbs._partialsBaseDir[name], '');
 
           text = '/* START_TEMPLATE */\n' +
                  'define('+tmplName+"['hbs','hbs/handlebars'"+depStr+helpDepStr+'], function( hbs, Handlebars ){ \n' +
