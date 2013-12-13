@@ -31,8 +31,8 @@ define([
   var customNameExtension = '@hbs';
   var devStyleDirectory = '/styles/';
   var buildStyleDirectory = '/demo-build/styles/';
-  var helperDirectory = 'template/helpers/';
-  var i18nDirectory = 'template/i18n/';
+  var helperDirectory = 'templates/helpers/';
+  var i18nDirectory = 'templates/i18n/';
   var buildCSSFileName = 'screen.build.css';
 
   Handlebars.registerHelper('$', function() {
@@ -188,7 +188,7 @@ define([
       //>>excludeStart('excludeHbs', pragmas.excludeHbs)
 
       var compiledName = name + customNameExtension;
-      var disableI18n = (config.hbs && config.hbs.disableI18n);
+      var disableI18n = !(config.hbs && config.hbs.disableI18n == false);
       var partialDeps = [];
 
       function recursiveNodeSearch( statements, res ) {
