@@ -89,13 +89,19 @@ define([
     };
 
     fetchText = function (url, callback) {
-      var uidx = (url.substr(0,5) === 'https') ? 8 : 7;
-      var hidx = (window.location.href.substr(0,5) === 'https') ? 8 : 7;
-      var dom = url.substr(uidx).split('/').shift();
-      var msie = getIEVersion();
-      var xdm = ( dom != window.location.href.substr(hidx).split('/').shift() ) && (msie > -1);
-
-      xdm = (msie >= 7);
+      var xdm = false;  
+      // If url is a fully qualified URL, it might be a cross domain request. Check for that.
+	  // IF url is a relative url, it cannot be cross domain.
+      if (url.indexOf('http') != 0 ){
+          xdm = false;
+      }else{
+          var uidx = (url.substr(0,5) === 'https') ? 8 : 7;
+          var hidx = (window.location.href.substr(0,5) === 'https') ? 8 : 7;
+          var dom = url.substr(uidx).split('/').shift();
+          var msie = getIEVersion();
+              xdm = ( dom != window.location.href.substr(hidx).split('/').shift() ) && (msie >= 7);
+      }
+      
       if ( xdm ) {
          var xdr = getXhr(true);
         xdr.open('GET', url);
