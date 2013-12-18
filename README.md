@@ -21,9 +21,12 @@ Write a template ( path: `App/Template/One.hbs` ):
   This is my {{ adjective }} template.
 
   {{! To include a partial: }}
-  {{! just provide the partial file path relative to the parent template without the extension }}
+  {{! just provide the path to the partial without the extension }}
 
   {{> App/Template/CoolPartial }}
+  
+  {{! the path can also be relative to the current template: }}
+  {{> ./coolPartial }}
 </div>
 ```
 
@@ -44,12 +47,16 @@ Clone this repo or use `bower` to add `require-handlebars-plugin` to your projec
     		hbs: 'lib/require-handlebars-plugin/hbs'
     	},
     	hbs: { // optional
-    		disableHelpers: false,   // default: false
-    		disableI18n: true,       // default: true
-    		templateExtension: 'hbs' // default: 'hbs'
+    		helpers: true,            // default: true
+    		i18n: false,              // default: false
+    		templateExtension: 'hbs', // default: 'hbs'
+    		partialsUrl: ''           // default: '' 
 		}
     });
  
+`partialsUrl`: base url for loading partials so that you don't have to provide the full path every time you need to load a partial within a template.
+
+
 Then require your templates like so:
 
 ```javascript
@@ -75,7 +82,7 @@ And then the output into your body would be as follows:
 
 YAY!
 
-# I18n
+# i18n
 
 **Note for [jam](http://jamjs.org/) users**: i18n is not currently supported in `jam compile` due to configuration issues. This is being worked on.
 

@@ -12,11 +12,6 @@ requirejs.config({
     // Karma serves files from '/base'
     baseUrl: '/base/',
 
-    hbs: {
-      disableHelpers: false,
-      disableI18n: true
-    },
-
     // ask Require.js to load these files (all our tests)
     deps: tests,
 
