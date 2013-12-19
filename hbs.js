@@ -233,7 +233,7 @@ define([
               return res;
             }
             catch (e) {
-              return '{ \'description\' : \'' + statement.comment + '\' }';
+              return '{ "description" : "' + statement.comment + '" }';
             }
           }
         }
