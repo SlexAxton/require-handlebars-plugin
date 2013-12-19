@@ -4,7 +4,7 @@
 
 Handlebars : `v1.1.2`
 
-hbs.js     : `v0.6.0`
+hbs.js     : `v0.7.0`
 
 ## Requirements
 
@@ -24,7 +24,7 @@ Write a template ( path: `App/Template/One.hbs` ):
   {{! just provide the path to the partial without the extension }}
 
   {{> App/Template/CoolPartial }}
-  
+
   {{! the path can also be relative to the current template: }}
   {{> ./coolPartial }}
 </div>
@@ -50,10 +50,10 @@ Clone this repo or use `bower` to add `require-handlebars-plugin` to your projec
     		helpers: true,            // default: true
     		i18n: false,              // default: false
     		templateExtension: 'hbs', // default: 'hbs'
-    		partialsUrl: ''           // default: '' 
+    		partialsUrl: ''           // default: ''
 		}
     });
- 
+
 `partialsUrl`: base url for loading partials so that you don't have to provide the full path every time you need to load a partial within a template.
 
 
