@@ -11,7 +11,7 @@
 define: false, process: false, window: false */
 define([
 //>>excludeStart('excludeHbs', pragmas.excludeHbs)
-  'Handlebars', 'underscore', 'i18nprecompile', 'json2'
+  'hbs/handlebars', 'hbs/underscore', 'hbs/i18nprecompile', 'hbs/json2'
 //>>excludeEnd('excludeHbs')
 ], function (
 //>>excludeStart('excludeHbs', pragmas.excludeHbs)
@@ -31,8 +31,8 @@ define([
   var customNameExtension = '@hbs';
   var devStyleDirectory = '/styles/';
   var buildStyleDirectory = '/demo-build/styles/';
-  var helperDirectory = 'template/helpers/';
-  var i18nDirectory = 'template/i18n/';
+  var helperDirectory = 'templates/helpers/';
+  var i18nDirectory = 'templates/i18n/';
   var buildCSSFileName = 'screen.build.css';
 
   Handlebars.registerHelper('$', function() {
@@ -194,7 +194,15 @@ define([
       //>>excludeStart('excludeHbs', pragmas.excludeHbs)
 
       var compiledName = name + customNameExtension;
-      var disableI18n = (config.hbs && config.hbs.disableI18n);
+      config.hbs = config.hbs || {};
+      var disableI18n = !(config.hbs.i18n == true); // by default we disable i18n unless config.hbs.i18n is true
+      var disableHelpers = (config.hbs.helpers == false); // be default we enable helpers unless config.hbs.helpers is false
+      var partialsUrl = '';
+      if(config.hbs.partialsUrl) {
+        partialsUrl = config.hbs.partialsUrl;
+        if(!partialsUrl.match(/\/$/)) partialsUrl += '/';
+      }
+
       var partialDeps = [];
 
       function recursiveNodeSearch( statements, res ) {
@@ -365,20 +373,35 @@ define([
         };
       }
 
+      function cleanPath(path) {
+        var tokens = path.split('/');
+        for(var i=0;i<tokens.length; i++) {
+          if(tokens[i] == '..') {
+            delete tokens[i-1];
+            delete tokens[i];
+          }
+        }
+        return tokens.join('/').replace(/\/\/+/g,'/');
+      };
+
       function fetchAndRegister(langMap) {
         fetchText(path, function(text) {
           // for some reason it doesn't include hbs _first_ when i don't add it here...
           var nodes = Handlebars.parse(text);
-          var deps = findPartialDeps( nodes );
+          var partials = findPartialDeps( nodes );
           var meta = getMetaData( nodes );
           var extDeps = getExternalDeps( nodes );
           var vars = extDeps.vars;
           var helps = (extDeps.helpers || []);
-          var depStr = deps.join("', 'hbs!").replace(/_/g, '/');
           var debugOutputStart = '';
           var debugOutputEnd   = '';
           var debugProperties = '';
-          var helpDepStr, metaObj, head, linkElem;
+          var deps = [];
+          var depStr, helpDepStr, metaObj, head, linkElem;
+          var baseDir = name.substr(0,name.lastIndexOf('/')+1);
+
+          require.config.hbs = require.config.hbs || {};
+          require.config.hbs._partials = require.config.hbs._partials || {};
 
           if(meta !== '{}') {
             try {
@@ -388,8 +411,36 @@ define([
             }
           }
 
+          for ( var i in partials ) {
+            if ( partials.hasOwnProperty(i) && typeof partials[i] === 'string') {  // make sure string, because we're iterating over all props
+              var partialReference = partials[i];
+
+              var path;
+              if(partialReference.match(/^(\.|\/)+/)) {
+                // relative path
+                path = cleanPath(baseDir + partialReference) 
+              }
+              else {
+                // absolute path relative to config.hbs.partialsUrl if defined
+                path = cleanPath(partialsUrl + partialReference);
+              }
+
+              require.config.hbs._partials[path] = require.config.hbs._partials[path] || [];
+
+              // we can reference a same template with different paths (with absolute or relative)
+              require.config.hbs._partials[path].references = require.config.hbs._partials[path].references || [];
+              require.config.hbs._partials[path].references.push(partialReference);
+
+              require.config.hbs._loadedDeps = require.config.hbs._loadedDeps || {};
+
+              deps[i] = "hbs!"+path;
+            }
+          }
+
+          depStr = deps.join("', 'hbs!");
+
           helps = helps.concat((metaObj && metaObj.helpers) ? metaObj.helpers : []);
-          helpDepStr = config.hbs && config.hbs.disableHelpers ?
+          helpDepStr = disableHelpers ?
             '' : (function (){
               var i;
               var paths = [];
@@ -405,9 +456,6 @@ define([
               return paths;
             })().join(',');
 
-          if ( depStr ) {
-            depStr = ",'hbs!" + depStr + "'";
-          }
           if ( helpDepStr ) {
             helpDepStr = ',' + helpDepStr;
           }
@@ -474,11 +522,20 @@ define([
           var prec = precompile( text, mapping, options);
           var tmplName = config.isBuild ? '' : "'" + name + "',";
 
+          if(depStr) depStr = ", '"+depStr+"'";
+
+          var partialReferences = []; 
+          if(require.config.hbs._partials[name])
+            partialReferences = require.config.hbs._partials[name].references; 
+
           text = '/* START_TEMPLATE */\n' +
-                 'define('+tmplName+"['hbs','Handlebars'"+depStr+helpDepStr+'], function( hbs, Handlebars ){ \n' +
-                   'var t = Handlebars.template(' + prec + ');\n' +
-                   "Handlebars.registerPartial('" + name.replace( /\//g , '_') + "', t);\n" +
-                   debugProperties +
+                 'define('+tmplName+"['hbs','hbs/handlebars'"+depStr+helpDepStr+'], function( hbs, Handlebars ){ \n' +
+                   'var t = Handlebars.template(' + prec + ');\n';
+
+          for(var i=0; i<partialReferences.length;i++)
+            text += "Handlebars.registerPartial('" + partialReferences[i] + "', t);\n";
+
+          text += debugProperties +
                    'return t;\n' +
                  '});\n' +
                  '/* END_TEMPLATE */\n';
@@ -495,12 +552,6 @@ define([
             text += '\r\n//@ sourceURL=' + path;
           }
           /*@end@*/
-
-          for ( var i in deps ) {
-            if ( deps.hasOwnProperty(i) && typeof deps[i] === 'string') {  // make sure string, because we're iterating over all props
-              deps[ i ] = 'hbs!' + deps[ i ].replace(/_/g, '/');
-            }
-          }
 
           if ( !config.isBuild ) {
             require( deps, function (){
@@ -528,6 +579,7 @@ define([
           if ( config.removeCombined ) {
             fs.unlinkSync(path);
           }
+
         });
       }
 
@@ -557,7 +609,7 @@ define([
           // if there's no configuration at all, log a warning and disable i18n for this and subsequent templates
           if(!config.hbs) {
             console.warn('hbs: Error reading ' + langMapPath + ', disabling i18n. Ignore this if you\'re using jam, otherwise check your i18n configuration.\n');
-            config.hbs = {disableI18n: true};
+            config.hbs = {i18n: false, helpers: true};
             fetchAndRegister(false);
           }
           else {

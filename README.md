@@ -4,7 +4,7 @@
 
 Handlebars : `v1.1.2`
 
-hbs.js     : `v0.5.0`
+hbs.js     : `v0.6.0`
 
 ## Requirements
 
@@ -21,10 +21,12 @@ Write a template ( path: `App/Template/One.hbs` ):
   This is my {{ adjective }} template.
 
   {{! To include a partial: }}
-  {{! Use underscores instead of slashes in your path, }}
-  {{! and leave off the extension. }}
+  {{! just provide the path to the partial without the extension }}
 
-  {{> App_Template_CoolPartial }}
+  {{> App/Template/CoolPartial }}
+  
+  {{! the path can also be relative to the current template: }}
+  {{> ./coolPartial }}
 </div>
 ```
 
@@ -37,15 +39,23 @@ Here's the partial (optional) ( path : `App/Template/CoolPartial.hbs` )
 </div>
 ```
 
-Include the `hbs.js` plugin and the `Handlebars.js` file in the same directory as your require.js script is. Usually, this is similar to the following.
+## Installation
+Clone this repo or use `bower` to add `require-handlebars-plugin` to your project (typically in you `lib/` directory) and make sure you tell `requirejs` about the new `hbs` plugin by editing your `requirejs.conf.js` file (you can also pass a few options):
 
-```sh
-~/Code/scripts/require.js
-~/Code/scripts/hbs.js
-~/Code/scripts/Handlebars.js
-~/Code/scripts/App/Template/One.hbs
-~/Code/scripts/App/Template/CoolPartial.hbs
-```
+    require.config({
+    	paths: {
+    		hbs: 'lib/require-handlebars-plugin/hbs'
+    	},
+    	hbs: { // optional
+    		helpers: true,            // default: true
+    		i18n: false,              // default: false
+    		templateExtension: 'hbs', // default: 'hbs'
+    		partialsUrl: ''           // default: '' 
+		}
+    });
+ 
+`partialsUrl`: base url for loading partials so that you don't have to provide the full path every time you need to load a partial within a template.
+
 
 Then require your templates like so:
 
@@ -55,6 +65,7 @@ require(['hbs!App/Template/One'], function ( tmplOne ) {
   document.body.innerHTML = tmplOne({adjective: "favorite"});
 });
 ```
+
 
 And then the output into your body would be as follows:
 
@@ -71,7 +82,7 @@ And then the output into your body would be as follows:
 
 YAY!
 
-# I18n
+# i18n
 
 **Note for [jam](http://jamjs.org/) users**: i18n is not currently supported in `jam compile` due to configuration issues. This is being worked on.
 
@@ -260,7 +271,7 @@ require.config({
 
 ## Partial Collision
 
-This plugin registers every single template as a partial with it's modified module name (Slashes replaced with underscores, and no file extension).
+This plugin registers every single template as a partial with it's modified module name and no file extension.
 
 `App/Template/One.handlebars` is registered as `App_Template_One`
 
