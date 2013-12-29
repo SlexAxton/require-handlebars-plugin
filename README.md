@@ -109,12 +109,12 @@ The locale defaults to the `en_us.json` file, but you can set the locale in your
 
 # Helpers
 
-Just put your helpers in `template/helpers/*` and they'll automagically get pulled in as long as you write them as modules.
+Just put your helpers in `templates/helpers/*` and they'll automagically get pulled in as long as you write them as modules.
 
 I find that many helpers are good helpers in regular code as well, so the following is a good practice:
 
 ```javascript
-define('template/helpers/roundNumber', ['Handlebars'], function ( Handlebars ) {
+define('templates/helpers/roundNumber', ['Handlebars'], function ( Handlebars ) {
   function roundNumber ( context, options ) {
     // Simple function for example
     return Math.round( context );
@@ -133,7 +133,7 @@ Then in your templates, you can just do:
 The system will make sure these modules are pulled in automatically from that directory. But if in your app, you need a rounding module (perhaps in a view/datanormalization place), you could do this:
 
 ```javascript
-require(['template/helpers/roundNumber'], function ( roundNumber ) {
+require(['templates/helpers/roundNumber'], function ( roundNumber ) {
   var threeFourths = (3/4);
   alert( roundNumber( threeFourths ));
 });
@@ -254,7 +254,7 @@ require.config({
                               // helpers (false by default)
 
     helperPathCallback:       // Callback to determine the path to look for helpers
-      function (name) {       // ('/template/helpers/'+name by default)
+      function (name) {       // ('/templates/helpers/'+name by default)
         return 'cs!' + name;
       },
 
