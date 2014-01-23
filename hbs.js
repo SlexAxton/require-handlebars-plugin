@@ -11,7 +11,7 @@
 define: false, process: false, window: false */
 define([
 //>>excludeStart('excludeHbs', pragmas.excludeHbs)
-  'hbs/handlebars', 'hbs/underscore', 'hbs/i18nprecompile', 'hbs/json2'
+  './lib/handlebars', './lib/underscore', './lib/i18nprecompile', './lib/json2'
 //>>excludeEnd('excludeHbs')
 ], function (
 //>>excludeStart('excludeHbs', pragmas.excludeHbs)
@@ -89,7 +89,7 @@ define([
     };
 
     fetchText = function (url, callback) {
-      var xdm = false;  
+      var xdm = false;
       // If url is a fully qualified URL, it might be a cross domain request. Check for that.
 	  // IF url is a relative url, it cannot be cross domain.
       if (url.indexOf('http') != 0 ){
@@ -101,7 +101,7 @@ define([
           var msie = getIEVersion();
               xdm = ( dom != window.location.href.substr(hidx).split('/').shift() ) && (msie >= 7);
       }
-      
+
       if ( xdm ) {
          var xdr = getXhr(true);
         xdr.open('GET', url);
@@ -418,7 +418,7 @@ define([
               var path;
               if(partialReference.match(/^(\.|\/)+/)) {
                 // relative path
-                path = cleanPath(baseDir + partialReference) 
+                path = cleanPath(baseDir + partialReference)
               }
               else {
                 // absolute path relative to config.hbs.partialsUrl if defined
@@ -524,12 +524,12 @@ define([
 
           if(depStr) depStr = ", '"+depStr+"'";
 
-          var partialReferences = []; 
+          var partialReferences = [];
           if(require.config.hbs._partials[name])
-            partialReferences = require.config.hbs._partials[name].references; 
+            partialReferences = require.config.hbs._partials[name].references;
 
           text = '/* START_TEMPLATE */\n' +
-                 'define('+tmplName+"['hbs','hbs/handlebars'"+depStr+helpDepStr+'], function( hbs, Handlebars ){ \n' +
+                 'define('+tmplName+"['hbs','hbs/lib/handlebars'"+depStr+helpDepStr+'], function( hbs, Handlebars ){ \n' +
                    'var t = Handlebars.template(' + prec + ');\n';
 
           for(var i=0; i<partialReferences.length;i++)

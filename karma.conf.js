@@ -17,7 +17,7 @@ module.exports = function(config) {
       'tests/test-main.js',
       'requirejs.conf.js',
       {pattern: 'hbs.js', included: false},
-      {pattern: 'hbs/*.js', included: false},
+      {pattern: 'lib/*.js', included: false},
       {pattern: 'tests/*.js', included: false},
       {pattern: 'tests/spec/*.js', included: false},
       {pattern: 'tests/templates/**/*.hbs', included: false}
