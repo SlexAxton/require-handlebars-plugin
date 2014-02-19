@@ -2,9 +2,9 @@
 
 ## Version
 
-Handlebars : `v1.1.2`
+Handlebars : `v1.3.0`
 
-hbs.js     : `v0.7.1`
+hbs.js     : `v0.8.0`
 
 ## Requirements
 
