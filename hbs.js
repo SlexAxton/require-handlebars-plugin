@@ -576,7 +576,7 @@ define([
             });
           }
 
-          if ( config.removeCombined ) {
+          if ( config.removeCombined && path ) {
             fs.unlinkSync(path);
           }
 
