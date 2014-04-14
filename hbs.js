@@ -106,7 +106,7 @@ define([
          var xdr = getXhr(true);
         xdr.open('GET', url);
         xdr.onload = function() {
-          callback(xdr.responseText);
+          callback(xdr.responseText, url);
         };
         xdr.onprogress = function(){};
         xdr.ontimeout = function(){};
@@ -122,7 +122,7 @@ define([
           //Do not explicitly handle errors, those should be
           //visible via console output in the browser.
           if (xhr.readyState === 4) {
-            callback(xhr.responseText);
+            callback(xhr.responseText, url);
           }
         };
         xhr.send(null);
@@ -141,7 +141,7 @@ define([
       var body = fs.readFileSync(path, 'utf8') || '';
       // we need to remove BOM stuff from the file content
       body = body.replace(/^\uFEFF/, '');
-      callback(body);
+      callback(body, path);
     };
   }
   else if (typeof java !== 'undefined' && typeof java.io !== 'undefined') {
@@ -155,7 +155,7 @@ define([
         text += new String(line) + '\n';
       }
       reader.close();
-      callback(text);
+      callback(text, path);
     };
   }
 
@@ -165,7 +165,7 @@ define([
       callback(cache[path]);
     }
     else {
-      fetchText(path, function(data){
+      fetchText(path, function(data, path){
         cache[path] = data;
         callback.call(this, data);
       });
@@ -385,7 +385,7 @@ define([
       };
 
       function fetchAndRegister(langMap) {
-        fetchText(path, function(text) {
+          fetchText(path, function(text, path) {
           // for some reason it doesn't include hbs _first_ when i don't add it here...
           var nodes = Handlebars.parse(text);
           var partials = findPartialDeps( nodes );
@@ -576,7 +576,7 @@ define([
             });
           }
 
-          if ( config.removeCombined ) {
+          if ( config.removeCombined && path ) {
             fs.unlinkSync(path);
           }
 
