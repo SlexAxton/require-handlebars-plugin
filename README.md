@@ -114,7 +114,7 @@ Just put your helpers in `templates/helpers/*` and they'll automagically get pul
 I find that many helpers are good helpers in regular code as well, so the following is a good practice:
 
 ```javascript
-define('templates/helpers/roundNumber', ['Handlebars'], function ( Handlebars ) {
+define('templates/helpers/roundNumber', ['hbs/handlebars'], function ( Handlebars ) {
   function roundNumber ( context, options ) {
     // Simple function for example
     return Math.round( context );
