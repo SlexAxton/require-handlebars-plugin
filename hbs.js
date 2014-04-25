@@ -34,6 +34,7 @@ define([
   var helperDirectory = 'templates/helpers/';
   var i18nDirectory = 'templates/i18n/';
   var buildCSSFileName = 'screen.build.css';
+  var onHbsReadMethod = "onHbsRead";
 
   Handlebars.registerHelper('$', function() {
     //placeholder for translation helper
@@ -386,8 +387,10 @@ define([
 
       function fetchAndRegister(langMap) {
           fetchText(path, function(text, path) {
+			  
+          var readCallback = (config.isBuild && config[onHbsReadMethod]) ? config[onHbsReadMethod]:  function(name,path,text){return text} ;
           // for some reason it doesn't include hbs _first_ when i don't add it here...
-          var nodes = Handlebars.parse(text);
+          var nodes = Handlebars.parse( readCallback(name, path, text));				
           var partials = findPartialDeps( nodes );
           var meta = getMetaData( nodes );
           var extDeps = getExternalDeps( nodes );
