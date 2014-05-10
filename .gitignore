@@ -1,3 +1,4 @@
 node_modules
 demo-build/*
 .DS_STORE
+.idea/

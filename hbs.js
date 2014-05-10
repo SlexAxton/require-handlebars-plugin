@@ -242,7 +242,9 @@ define([
               return res;
             }
             catch (e) {
-              return '{ "description" : "' + statement.comment + '" }';
+              return JSON.stringify({
+                description: res
+              });
             }
           }
         }
@@ -387,10 +389,10 @@ define([
 
       function fetchAndRegister(langMap) {
           fetchText(path, function(text, path) {
-			  
+
           var readCallback = (config.isBuild && config[onHbsReadMethod]) ? config[onHbsReadMethod]:  function(name,path,text){return text} ;
           // for some reason it doesn't include hbs _first_ when i don't add it here...
-          var nodes = Handlebars.parse( readCallback(name, path, text));				
+          var nodes = Handlebars.parse( readCallback(name, path, text));
           var partials = findPartialDeps( nodes );
           var meta = getMetaData( nodes );
           var extDeps = getExternalDeps( nodes );
