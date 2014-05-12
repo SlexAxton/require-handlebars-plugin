@@ -147,9 +147,9 @@ define([
   }
   else if (typeof java !== 'undefined' && typeof java.io !== 'undefined') {
     fetchText = function(path, callback) {
-      var f = new java.io.File(path);
-      var is = new java.io.FileReader(f);
-      var reader = new java.io.BufferedReader(is);
+      var fis = new java.io.FileInputStream(path);
+      var streamReader = new java.io.InputStreamReader(fis, "UTF-8");
+      var reader = new java.io.BufferedReader(streamReader);
       var line;
       var text = '';
       while ((line = reader.readLine()) !== null) {
