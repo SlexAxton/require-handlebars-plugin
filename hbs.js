@@ -535,7 +535,8 @@ define([
 
           text = '/* START_TEMPLATE */\n' +
                  'define('+tmplName+"['hbs','hbs/handlebars'"+depStr+helpDepStr+'], function( hbs, Handlebars ){ \n' +
-                   'var t = Handlebars.template(' + prec + ');\n';
+                   'var t = Handlebars.template(' + prec + ');\n' +
+                   "Handlebars.registerPartial('" + name + "', t);\n";
 
           for(var i=0; i<partialReferences.length;i++)
             text += "Handlebars.registerPartial('" + partialReferences[i] + "', t);\n";
