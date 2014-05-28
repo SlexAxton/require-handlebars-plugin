@@ -15,6 +15,12 @@ requirejs.config({
     // ask Require.js to load these files (all our tests)
     deps: tests,
 
+    hbs: {
+      helperPathCallback: function (name) {
+        return '/base/tests/templates/helpers/' + name + '.js';
+      }
+    },
+
     // start test run, once Require.js is done
     callback: window.__karma__.start
 });
