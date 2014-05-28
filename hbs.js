@@ -204,6 +204,11 @@ define([
         if(!partialsUrl.match(/\/$/)) partialsUrl += '/';
       }
 
+      // Let redefine default fetchText
+      if(config.hbs.fetchText) {
+          fetchText = config.hbs.fetchText;
+      }
+
       var partialDeps = [];
 
       function recursiveNodeSearch( statements, res ) {
