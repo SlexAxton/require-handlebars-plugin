@@ -1,9 +1,3 @@
-var templates = ['_partial_loaded'];
-
-templates = templates.map(function(template) {
-  return 'hbs!'+require.toUrl('tests/templates/'+template);
-});
-
 define([], function() {
 
   require(['hbs!tests/templates/_partial_loaded'], function(partial) {
@@ -14,7 +8,7 @@ define([], function() {
     });
   });
 
-  require(['hbs!' + require.toUrl('tests/templates/partial_loaded')], function(template) {
+  require(['hbs!tests/templates/partial_loaded'], function(template) {
     describe("template with an already loaded partial", function() {
 
       it("loads the partials", function() {
