@@ -309,8 +309,32 @@ define([
                   || param instanceof Handlebars.AST.StringNode
                   || param instanceof Handlebars.AST.IntegerNode
                   || param instanceof Handlebars.AST.BooleanNode
+                  || param instanceof Handlebars.AST.SexprNode
                 ) {
                   helpersres.push(statement.id.string);
+
+                  // Look into the params to find subexpressions
+                  if (typeof statement.params !== 'undefined') {
+                      _(statement.params).forEach(function(param) {
+                        if (param.type === 'sexpr' && param.isHelper === true) {
+                          // Found subexpression in params
+                          helpersres.push(param.id.string);
+                        }
+                      });
+                  }
+
+                  // Look in the hash to find sub expressions
+                  if (typeof statement.hash !== 'undefined' && typeof statement.hash.pairs !== 'undefined') {
+                    _(statement.hash.pairs).forEach(function(pair) {
+                      var pairName = pair[0],
+                          pairValue = pair[1];
+                      if (pairValue.type === 'sexpr' && pairValue.isHelper === true) {
+                        // Found subexpression in hash params
+                        helpersres.push(pairValue.id.string);
+                      }
+                    });
+                  }
+
                 }
 
                 parts = composeParts( param.parts );
