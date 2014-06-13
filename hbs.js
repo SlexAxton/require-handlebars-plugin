@@ -1,5 +1,5 @@
 /**
- * @license Handlebars hbs 0.4.0 - Alex Sexton, but Handlebars has its own licensing junk
+ * @license Handlebars hbs 0.8.1 - Alex Sexton, but Handlebars has its own licensing junk
  *
  * Available via the MIT or new BSD license.
  * see: http://github.com/jrburke/require-cs for details on the plugin this was based off of
@@ -189,7 +189,7 @@ define([
       }
     },
 
-    version: '0.5.0',
+    version: '0.8.1',
 
     load: function (name, parentRequire, load, config) {
       //>>excludeStart('excludeHbs', pragmas.excludeHbs)
