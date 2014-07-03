@@ -232,7 +232,7 @@ define([
         if ( nodes && nodes.statements ) {
           res = recursiveNodeSearch( nodes.statements, [] );
         }
-        return _(res).unique();
+        return _.unique(res);
       }
 
       // See if the first item is a comment that's json
