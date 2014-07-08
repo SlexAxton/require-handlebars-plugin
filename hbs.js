@@ -346,15 +346,15 @@ define([
                   }
                 }
               });
-			  if (typeof statement.hash !== 'undefined' && typeof statement.hash.pairs !== 'undefined') {
+              if (typeof statement.hash !== 'undefined' && typeof statement.hash.pairs !== 'undefined') {
                 //Even if it has no regular params, it may be a helper with hash params
                 _(statement.hash.pairs).forEach(function(pair) {
                   var pairValue = pair[1];
                   if (pairValue instanceof Handlebars.AST.StringNode
-				    || pairValue instanceof Handlebars.AST.IntegerNode
-				    || pairValue instanceof Handlebars.AST.BooleanNode
-				    //TODO: Add support for subexpressions here?
-				  ) {
+                    || pairValue instanceof Handlebars.AST.IntegerNode
+                    || pairValue instanceof Handlebars.AST.BooleanNode
+                    //TODO: Add support for subexpressions here?
+                  ) {
                     helpersres.push(statement.id.string);
                   }
                 });
