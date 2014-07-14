@@ -309,6 +309,7 @@ define([
                   || param instanceof Handlebars.AST.StringNode
                   || param instanceof Handlebars.AST.IntegerNode
                   || param instanceof Handlebars.AST.BooleanNode
+                  || param instanceof Handlebars.AST.DataNode
                   || param instanceof Handlebars.AST.SexprNode
                 ) {
                   helpersres.push(statement.id.string);
