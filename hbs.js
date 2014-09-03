@@ -325,7 +325,7 @@ define([
                   }
 
                   // Look in the hash to find sub expressions
-                  if (typeof statement.hash !== 'undefined' && typeof statement.hash.pairs !== 'undefined') {
+                  if ((statement.hash != null) && (typeof statement.hash !== 'undefined') && (typeof statement.hash.pairs !== 'undefined')) {
                     _(statement.hash.pairs).forEach(function(pair) {
                       var pairName = pair[0],
                           pairValue = pair[1];
@@ -347,7 +347,7 @@ define([
                   }
                 }
               });
-              if (typeof statement.hash !== 'undefined' && typeof statement.hash.pairs !== 'undefined') {
+              if ((statement.hash != null) && (typeof statement.hash !== 'undefined') && (typeof statement.hash.pairs !== 'undefined')) {
                 //Even if it has no regular params, it may be a helper with hash params
                 _(statement.hash.pairs).forEach(function(pair) {
                   var pairValue = pair[1];
