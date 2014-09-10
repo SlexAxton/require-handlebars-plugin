@@ -354,6 +354,7 @@ define([
                   if (pairValue instanceof Handlebars.AST.StringNode
                     || pairValue instanceof Handlebars.AST.IntegerNode
                     || pairValue instanceof Handlebars.AST.BooleanNode
+                    || pairValue instanceof Handlebars.AST.IdNode
                     //TODO: Add support for subexpressions here?
                   ) {
                     helpersres.push(statement.id.string);
