@@ -1,4 +1,4 @@
-define(["Handlebars"], function(Handlebars) {
+define(["hbs/handlebars"], function(Handlebars) {
   function myhelper(options) {
     return options.fn();
   }

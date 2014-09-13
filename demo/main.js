@@ -1,5 +1,5 @@
 // Require our template with the handlebars plugin
-define(['hbs!template/one'], function (tmplOne) {
+define(['hbs!templates/one'], function (tmplOne) {
   // Find our container
   var container = document.getElementById('demo-app-container');
   // Run your template function, and inject it.
