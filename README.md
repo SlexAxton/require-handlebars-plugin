@@ -1,11 +1,5 @@
 # Require.js Handlebars Plugin
 
-## Version
-
-Handlebars : `v1.3.0`
-
-hbs.js     : `v0.8.1`
-
 [![devDependency Status](https://david-dm.org/SlexAxton/require-handlebars-plugin/dev-status.svg)](https://david-dm.org/SlexAxton/require-handlebars-plugin#info=devDependencies)
 
 ## Requirements
