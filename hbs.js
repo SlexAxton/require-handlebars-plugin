@@ -626,7 +626,9 @@ define([
           }
 
           if ( config.removeCombined && path ) {
-            fs.unlinkSync(path);
+            if (fs && fs.existsSync(path)) {
+              fs.unlinkSync(path);
+            }
           }
 
         });
