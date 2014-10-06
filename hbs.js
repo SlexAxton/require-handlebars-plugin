@@ -219,8 +219,8 @@ define([
           if ( statement && statement.program && statement.program.statements ) {
             recursiveNodeSearch( statement.program.statements, res );
           }
-          if ( statement && statement.program && statement.program.inverse && statement.program.inverse.statements ) {
-            recursiveNodeSearch( statement.program.inverse.statements, res );
+          if ( statement && statement.inverse && statement.inverse.statements ) {
+            recursiveNodeSearch( statement.inverse.statements, res );
           }
         });
         return res;
@@ -372,8 +372,8 @@ define([
           // if it's a whole new program
           if ( statement && statement.program && statement.program.statements ) {
             sideways = recursiveVarSearch([statement.mustache],[], '', helpersres)[0] || '';
-            if ( statement.program.inverse && statement.program.inverse.statements ) {
-              recursiveVarSearch( statement.program.inverse.statements, res, prefix + newprefix + (sideways ? (prefix+newprefix) ? '.'+sideways : sideways : ''), helpersres);
+            if ( statement.inverse && statement.inverse.statements ) {
+              recursiveVarSearch( statement.inverse.statements, res, prefix + newprefix + (sideways ? (prefix+newprefix) ? '.'+sideways : sideways : ''), helpersres);
             }
             recursiveVarSearch( statement.program.statements, res, prefix + newprefix + (sideways ? (prefix+newprefix) ? '.'+sideways : sideways : ''), helpersres);
           }
