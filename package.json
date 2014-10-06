@@ -1,6 +1,6 @@
 {
   "name": "require-handlebars-plugin",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "author": "Alex Sexton <alexsexton@gmail.com>",
   "description": "A plugin for handlebars in require.js",
   "repository": {
