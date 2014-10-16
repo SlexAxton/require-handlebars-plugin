@@ -36,7 +36,7 @@ Here's the partial (optional) ( path : `App/Template/CoolPartial.hbs` )
 ```
 
 ## Installation
-Clone this repo or use `bower` to add `require-handlebars-plugin` to your project (typically in you `lib/` directory) and make sure you tell `requirejs` about the new `hbs` plugin by editing your `requirejs.conf.js` file (you can also pass a few options):
+Clone this repo* or use `bower` to add `require-handlebars-plugin` to your project (typically in you `lib/` directory) and make sure you tell `requirejs` about the new `hbs` plugin by editing your `requirejs.conf.js` file (you can also pass a few options):
 
     require.config({
     	paths: {
@@ -77,6 +77,8 @@ And then the output into your body would be as follows:
 ```
 
 YAY!
+
+\* Note that if you clone the require-handlebars-plugin repository into an existing git repository, the existing repo will not include the files within the newly-cloned require-handlebars-plugin repo, because git ignores all subfolders which are git repos of their own. Look into git's submodules feature as a way to solve this issue.
 
 # i18n
 
