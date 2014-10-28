@@ -568,7 +568,7 @@ define([
           var configHbs = config.hbs || {};
           var options = _.extend(configHbs.compileOptions || {}, { originalKeyFallback: configHbs.originalKeyFallback });
           var prec = precompile( text, mapping, options);
-          var tmplName = config.isBuild ? '' : "'hbs!" + name + "',";
+          var tmplName = "'hbs!" + name + "',";
 
           if(depStr) depStr = ", '"+depStr+"'";
 
