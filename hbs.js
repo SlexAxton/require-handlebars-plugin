@@ -422,13 +422,15 @@ define([
       function cleanPath(path) {
         var tokens = path.split('/');
         for(var i=0;i<tokens.length; i++) {
-          if(tokens[i] == '..') {
+          if(tokens[i] === '..') {
             delete tokens[i-1];
+            delete tokens[i];
+          } else if (tokens[i] === '.') {
             delete tokens[i];
           }
         }
         return tokens.join('/').replace(/\/\/+/g,'/');
-      };
+      }
 
       function fetchAndRegister(langMap) {
           fetchText(path, function(text, path) {
