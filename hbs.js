@@ -1,5 +1,5 @@
 /**
- * @license Handlebars hbs 0.9.1 - Alex Sexton, but Handlebars has its own licensing junk
+ * @license Handlebars hbs 2.0.0 - Alex Sexton, but Handlebars has its own licensing junk
  *
  * Available via the MIT or new BSD license.
  * see: http://github.com/jrburke/require-cs for details on the plugin this was based off of
@@ -189,7 +189,7 @@ define([
       }
     },
 
-    version: '0.9.1',
+    version: '2.0.0',
 
     load: function (name, parentRequire, load, config) {
       //>>excludeStart('excludeHbs', pragmas.excludeHbs)
@@ -307,7 +307,7 @@ define([
               _(statement.params).forEach(function(param) {
                 if ( _(paramsWithoutParts).contains(param.original)
                   || param instanceof Handlebars.AST.StringNode
-                  || param instanceof Handlebars.AST.IntegerNode
+                  || param instanceof Handlebars.AST.NumberNode
                   || param instanceof Handlebars.AST.BooleanNode
                   || param instanceof Handlebars.AST.DataNode
                   || param instanceof Handlebars.AST.SexprNode
@@ -352,7 +352,7 @@ define([
                 _(statement.hash.pairs).forEach(function(pair) {
                   var pairValue = pair[1];
                   if (pairValue instanceof Handlebars.AST.StringNode
-                    || pairValue instanceof Handlebars.AST.IntegerNode
+                    || pairValue instanceof Handlebars.AST.NumberNode
                     || pairValue instanceof Handlebars.AST.BooleanNode
                     || pairValue instanceof Handlebars.AST.IdNode
                     //TODO: Add support for subexpressions here?
@@ -396,7 +396,9 @@ define([
           'each',
           'if',
           'unless',
-          'with'
+          'with',
+          'log',
+          'lookup'
         ];
 
         return {
