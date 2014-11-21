@@ -30,14 +30,26 @@ define(['hbs/handlebars', "hbs/underscore"], function ( Handlebars, _ ) {
     return ast;
   }
 
-  return function(string, mapping, options) {
-    options = options || {};
+  return function precompile (string, mapping, options) {
     var ast, environment;
+
+    options = options || {};
+
+    if (!('data' in options)) {
+      options.data = true;
+    }
+
+    if (options.compat) {
+      options.useDepths = true;
+    }
+
     ast = Handlebars.parse(string);
+
     // avoid replacing locale if mapping is `false`
     if (mapping !== false) {
         ast = replaceLocaleStrings(ast, mapping, options);
     }
+
     environment = new Handlebars.Compiler().compile(ast, options);
     return new Handlebars.JavaScriptCompiler().compile(environment, options);
   };
