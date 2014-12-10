@@ -92,7 +92,7 @@ define([
     fetchText = function (url, callback) {
       var xdm = false;
       // If url is a fully qualified URL, it might be a cross domain request. Check for that.
-	  // IF url is a relative url, it cannot be cross domain.
+      // IF url is a relative url, it cannot be cross domain.
       if (url.indexOf('http') != 0 ){
           xdm = false;
       }else{
@@ -176,6 +176,9 @@ define([
   var styleMap = {};
   //>>excludeEnd('excludeHbs')
 
+  var config;
+  var filesToRemove = [];
+
   return {
 
     get: function () {
@@ -191,8 +194,9 @@ define([
 
     version: '2.0.0',
 
-    load: function (name, parentRequire, load, config) {
+    load: function (name, parentRequire, load, _config) {
       //>>excludeStart('excludeHbs', pragmas.excludeHbs)
+      config = config || _config;
 
       var compiledName = name + customNameExtension;
       config.hbs = config.hbs || {};
@@ -630,9 +634,7 @@ define([
           }
 
           if ( config.removeCombined && path ) {
-            if (fs && fs.existsSync(path)) {
-              fs.unlinkSync(path);
-            }
+            filesToRemove.push(path);
           }
 
         });
@@ -673,6 +675,16 @@ define([
         }
       }
       //>>excludeEnd('excludeHbs')
+    },
+
+    onLayerEnd: function () {
+      if (config.removeCombined && fs) {
+        filesToRemove.forEach(function (path) {
+          if (fs.existsSync(path)) {
+            fs.unlinkSync(path);
+          }
+        });
+      }
     }
   };
 });
