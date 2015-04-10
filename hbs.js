@@ -471,25 +471,36 @@ define([
             if ( partials.hasOwnProperty(i) && typeof partials[i] === 'string') {  // make sure string, because we're iterating over all props
               var partialReference = partials[i];
 
-              var path;
+              var partialPath;
               if(partialReference.match(/^(\.|\/)+/)) {
                 // relative path
-                path = cleanPath(baseDir + partialReference)
+                partialPath = cleanPath(baseDir + partialReference);
               }
               else {
                 // absolute path relative to config.hbs.partialsUrl if defined
-                path = cleanPath(partialsUrl + partialReference);
+                partialPath = cleanPath(partialsUrl + partialReference);
               }
 
-              require.config.hbs._partials[path] = require.config.hbs._partials[path] || [];
+              // check for recursive partials
+              if (omitExtension) {
+                if(path === parentRequire.toUrl(partialPath)) {
+                  continue;
+                }
+              } else {
+                if(path === parentRequire.toUrl(partialPath +'.'+ (config.hbs && config.hbs.templateExtension ? config.hbs.templateExtension : templateExtension))) {
+                  continue;
+                }
+              }
+
+              require.config.hbs._partials[partialPath] = require.config.hbs._partials[partialPath] || [];
 
               // we can reference a same template with different paths (with absolute or relative)
-              require.config.hbs._partials[path].references = require.config.hbs._partials[path].references || [];
-              require.config.hbs._partials[path].references.push(partialReference);
+              require.config.hbs._partials[partialPath].references = require.config.hbs._partials[partialPath].references || [];
+              require.config.hbs._partials[partialPath].references.push(partialReference);
 
               require.config.hbs._loadedDeps = require.config.hbs._loadedDeps || {};
 
-              deps[i] = "hbs!"+path;
+              deps[i] = "hbs!"+partialPath;
             }
           }
 
