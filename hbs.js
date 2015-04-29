@@ -456,8 +456,8 @@ define([
           var depStr, helpDepStr, metaObj, head, linkElem;
           var baseDir = name.substr(0,name.lastIndexOf('/')+1);
 
-          require.config.hbs = require.config.hbs || {};
-          require.config.hbs._partials = require.config.hbs._partials || {};
+          config.hbs = config.hbs || {};
+          config.hbs._partials = config.hbs._partials || {};
 
           if(meta !== '{}') {
             try {
@@ -492,13 +492,13 @@ define([
                 }
               }
 
-              require.config.hbs._partials[partialPath] = require.config.hbs._partials[partialPath] || [];
+              config.hbs._partials[partialPath] = config.hbs._partials[partialPath] || [];
 
               // we can reference a same template with different paths (with absolute or relative)
-              require.config.hbs._partials[partialPath].references = require.config.hbs._partials[partialPath].references || [];
-              require.config.hbs._partials[partialPath].references.push(partialReference);
+              config.hbs._partials[partialPath].references = config.hbs._partials[partialPath].references || [];
+              config.hbs._partials[partialPath].references.push(partialReference);
 
-              require.config.hbs._loadedDeps = require.config.hbs._loadedDeps || {};
+              config.hbs._loadedDeps = config.hbs._loadedDeps || {};
 
               deps[i] = "hbs!"+partialPath;
             }
@@ -592,8 +592,8 @@ define([
           if(depStr) depStr = ", '"+depStr+"'";
 
           var partialReferences = [];
-          if(require.config.hbs._partials[name])
-            partialReferences = require.config.hbs._partials[name].references;
+          if(config.hbs._partials[name])
+            partialReferences = config.hbs._partials[name].references;
 
           text = '/* START_TEMPLATE */\n' +
                  'define('+tmplName+"['hbs','hbs/handlebars'"+depStr+helpDepStr+'], function( hbs, Handlebars ){ \n' +
@@ -622,7 +622,7 @@ define([
           /*@end@*/
 
           if ( !config.isBuild ) {
-            require( deps, function (){
+            parentRequire( deps, function (){
               load.fromText(text);
 
               //Give result to load. Need to wait until the module
