@@ -289,6 +289,23 @@ define([
           var part;
           var sideways;
 
+          // #217
+          var searchParamsForSexpr = function (params) {
+            params.forEach(function (param) {
+              if (param.type === 'sexpr' && param.isHelper === true) {
+                helpersres.push(param.id.string);
+
+                if (param.params) {
+                  searchParamsForSexpr(param.params);
+                }
+              }
+            });
+          };
+
+          if (statement.params) {
+            searchParamsForSexpr(statement.params);
+          }
+
           // if it's a mustache block
           if ( statement && statement.type && statement.type === 'mustache' ) {
 
