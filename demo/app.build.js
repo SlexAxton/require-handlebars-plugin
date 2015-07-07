@@ -17,13 +17,11 @@
         // removes i18n precompiler, handlebars and json2
         excludeAfterBuild: true
     },
+    exclude: ["handlebars"],
+    include: ["handlebars.runtime"],
 
     paths: {
-      "hbs": "../hbs",
-      "Handlebars" : "../Handlebars",
-      "underscore" : "../hbs/underscore",
-      "i18nprecompile" : "../hbs/i18nprecompile",
-      "json2" : "../hbs/json2"
+      "hbs": "../hbs"
       // if your project is already using underscore.js and you want to keep
       // the hbs plugin even after build (excludeHbs:false) you should set the
       // "hbs/underscore" path to point to the shared location like
@@ -37,8 +35,12 @@
         templateExtension : 'hbs',
         // if disableI18n is `true` it won't load locales and the i18n helper
         // won't work as well.
-        disableI18n : false
+        i18n : true,
+        helperDirectory : "template/helpers/",
+        i18nDirectory: "template/i18n/"
     },
+
+
 
     modules: [
         {

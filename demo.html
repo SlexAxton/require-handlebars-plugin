@@ -15,18 +15,15 @@
     templateExtension : 'hbs',
     // if disableI18n is `true` it won't load locales and the i18n helper
     // won't work as well.
-    disableI18n : false
+    i18n : true,
+    helperDirectory : "template/helpers/",
+    i18nDirectory: "template/i18n/"
   },
   // I change the path as to not duplicate the hbs.js and handlebars plugin.
   // Normally, just drop it in the same place as require.js and it'll work fine.
   // Essentially just ignore this.
   paths  : {
-    'hbs' : '../hbs',
-    'Handlebars' : '../Handlebars',
-    'underscore' : '../hbs/underscore',
-    'i18nprecompile' : '../hbs/i18nprecompile',
-    'json2' : '../hbs/json2'
-
+    'hbs' : '../hbs'
   }
 };</script>
 <!-- use a common require.js and app injection method. -->
