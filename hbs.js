@@ -192,7 +192,7 @@ define([
       }
     },
 
-		version: '3.0.3',
+        version: '3.0.3',
 
     load: function (name, parentRequire, load, _config) {
       //>>excludeStart('excludeHbs', pragmas.excludeHbs)
@@ -218,10 +218,10 @@ define([
       function recursiveNodeSearch( statements, res ) {
         _(statements).forEach(function ( statement ) {
           if ( statement && statement.type && statement.type === 'PartialStatement' ) {
-			//Don't register dynamic partials as undefined
-			  if(statement.name.type !== "SubExpression"){
-				res.push(statement.name.original);
-			  }
+          //Don't register dynamic partials as undefined
+            if(statement.name.type !== "SubExpression"){
+              res.push(statement.name.original);
+            }
           }
           if ( statement && statement.program && statement.program.body ) {
             recursiveNodeSearch( statement.program.body, res );
@@ -240,11 +240,11 @@ define([
         res = recursiveNodeSearch( nodes.body, [] );
       }
 
-	  if(metaObj && metaObj.partials && metaObj.partials.length){
-		 _(metaObj.partials).forEach(function ( partial ) {
-			res.push(partial);
-		 });
-	  }
+      if(metaObj && metaObj.partials && metaObj.partials.length){
+        _(metaObj.partials).forEach(function ( partial ) {
+          res.push(partial);
+        });
+      }
 
         return _.unique(res);
       }
@@ -287,35 +287,35 @@ define([
         return res;
       }
 
-			//Taken from Handlebar.AST.helpers.helperExpression with slight modification
-			function isHelper(statement){
-				return !!(statement.type === 'SubExpression' || (statement.params && statement.params.length) || statement.hash);
-			}
+      //Taken from Handlebar.AST.helpers.helperExpression with slight modification
+      function isHelper(statement){
+        return !!(statement.type === 'SubExpression' || (statement.params && statement.params.length) || statement.hash);
+      }
 
-			function checkStatementForHelpers(statement, helpersres){
+      function checkStatementForHelpers(statement, helpersres){
 
-				if(isHelper(statement)){
-					registerHelper(statement.path.original,helpersres);
-				}
+        if(isHelper(statement)){
+          registerHelper(statement.path.original,helpersres);
+        }
 
-				if(statement && statement.params){
-					statement.params.forEach(function (param) {
-						checkStatementForHelpers(param, helpersres);
-					});
-				}
+        if(statement && statement.params){
+          statement.params.forEach(function (param) {
+            checkStatementForHelpers(param, helpersres);
+          });
+        }
 
-				if(statement && statement.hash && statement.hash.pairs){
-					_(statement.hash.pairs).forEach(function(pair) {
-						checkStatementForHelpers(pair.value, helpersres);
-					});
-				}
-			}
+        if(statement && statement.hash && statement.hash.pairs){
+          _(statement.hash.pairs).forEach(function(pair) {
+            checkStatementForHelpers(pair.value, helpersres);
+          });
+        }
+      }
 
-			function registerHelper(helperName,helpersres){
-				if(typeof Handlebars.helpers[helperName] === 'undefined'){
-					helpersres.push(helperName);
-				}
-			}
+      function registerHelper(helperName,helpersres){
+        if(typeof Handlebars.helpers[helperName] === 'undefined'){
+          helpersres.push(helperName);
+        }
+      }
 
       function recursiveVarSearch( statements, res, prefix, helpersres ) {
         prefix = prefix ? prefix + '.' : '';
@@ -329,12 +329,12 @@ define([
           var part;
           var sideways;
 
-		  //Its a helper or a mustache statement
-		  if (isHelper(statement) || statement.type === 'MustacheStatement') {
-			checkStatementForHelpers(statement, helpersres);
-		  }
+          //Its a helper or a mustache statement
+          if (isHelper(statement) || statement.type === 'MustacheStatement') {
+            checkStatementForHelpers(statement, helpersres);
+          }
 
-		// If it's a meta block, not sure what this is. It should probably never happen
+          // If it's a meta block, not sure what this is. It should probably never happen
           if ( statement && statement.mustache  ) {
             recursiveVarSearch( [statement.mustache], res, prefix + newprefix, helpersres );
           }
