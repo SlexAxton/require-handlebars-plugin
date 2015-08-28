@@ -192,7 +192,7 @@ define([
       }
     },
 
-        version: '3.0.3',
+    version: '3.0.3',
 
     load: function (name, parentRequire, load, _config) {
       //>>excludeStart('excludeHbs', pragmas.excludeHbs)
