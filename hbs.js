@@ -295,7 +295,9 @@ define([
       function checkStatementForHelpers(statement, helpersres){
 
         if(isHelper(statement)){
-          registerHelper(statement.path.original,helpersres);
+          if(typeof statement.path !== 'undefined'){
+            registerHelper(statement.path.original,helpersres);
+          }
         }
 
         if(statement && statement.params){
