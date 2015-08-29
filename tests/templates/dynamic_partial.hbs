@@ -1,0 +1,11 @@
+{{!
+{
+  "name" : "Dynamic Partial",
+  "decription" : "Verify that defining a partial in this list will ensure that the partial gets registered",
+  "partials":["tests/templates/partial"]
+}
+}}
+<div>
+<p> I am a dynamic partial</p>
+  {{> (lookup . "variable")}}
+</div>
