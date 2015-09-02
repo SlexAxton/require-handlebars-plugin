@@ -224,22 +224,27 @@ require.config({
 
   // hbs config
   hbs: {
-    disableI18n: true,        // This disables the i18n helper and
-                              // doesn't require the json i18n files (e.g. en_us.json)
-                              // (false by default)
+    disableI18n: true,            // This disables the i18n helper and
+                                  // doesn't require the json i18n files (e.g. en_us.json)
+                                  // (false by default)
 
-    disableHelpers: true,     // When true, won't look for and try to automatically load
-                              // helpers (false by default)
+    disableHelpers: true,         // When true, won't look for and try to automatically load
+                                  // helpers (false by default)
 
-    helperPathCallback:       // Callback to determine the path to look for helpers
-      function (name) {       // ('/templates/helpers/'+name by default)
+    helperPathCallback:           // Callback to determine the path to look for helpers
+      function (name) {           // ('/templates/helpers/'+name by default)
         return 'cs!' + name;
       },
 
-    templateExtension: "html" // Set the extension automatically appended to templates
-                              // ('hbs' by default)
+    templateExtension: "html"     // Set the extension automatically appended to templates
+                                  // ('hbs' by default)
+                              
+    handlebarsPath:               // Custom path to handlebars ('hbs/handlebars' by default)
+      'some/path/to/handlebars'   // Value could simply be 'handlebars' as long as key
+                                  // 'handlebars' is defined in require's paths object
+                                  // such as 'handlebars': 'some/path/to/handlebars'
 
-    compileOptions: {}        // options object which is passed to Handlebars compiler
+    compileOptions: {}            // options object which is passed to Handlebars compiler
   }
 
 })
