@@ -238,6 +238,11 @@ require.config({
 
     templateExtension: "html" // Set the extension automatically appended to templates
                               // ('hbs' by default)
+                              
+    handlebarsPath:               // Custom path to handlebars ('hbs/handlebars' by default)
+      'some/path/to/handlebars'   // Value could simply be 'handlebars' as long as key
+                                  // 'handlebars' is defined in require's paths object
+                                  // such as 'handlebars': 'some/path/to/handlebars'
 
     compileOptions: {}        // options object which is passed to Handlebars compiler
   }
