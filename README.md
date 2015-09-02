@@ -44,7 +44,6 @@ Clone this repo* or use `bower` to add `require-handlebars-plugin` to your proje
     	},
     	hbs: { // optional
     		helpers: true,            // default: true
-    		i18n: false,              // default: false
     		templateExtension: 'hbs', // default: 'hbs'
     		partialsUrl: ''           // default: ''
 		}
@@ -82,8 +81,7 @@ YAY!
 
 # i18n
 
-I don't think this lib is a good place to couple i18n. There are some legacy features still there,
-but I think ideas like this one are better: [https://github.com/slexaxton/mfbars](https://github.com/slexaxton/mfbars)
+As of the latest version. This functionality has been removed. Probably use format-js for this.
 
 # Helpers
 
@@ -224,10 +222,6 @@ require.config({
 
   // hbs config
   hbs: {
-    disableI18n: true,            // This disables the i18n helper and
-                                  // doesn't require the json i18n files (e.g. en_us.json)
-                                  // (false by default)
-
     disableHelpers: true,         // When true, won't look for and try to automatically load
                                   // helpers (false by default)
 
@@ -238,7 +232,7 @@ require.config({
 
     templateExtension: "html"     // Set the extension automatically appended to templates
                                   // ('hbs' by default)
-                              
+
     handlebarsPath:               // Custom path to handlebars ('hbs/handlebars' by default)
       'some/path/to/handlebars'   // Value could simply be 'handlebars' as long as key
                                   // 'handlebars' is defined in require's paths object

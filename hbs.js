@@ -11,14 +11,33 @@
 define: false, process: false, window: false */
 define([
 //>>excludeStart('excludeHbs', pragmas.excludeHbs)
-  'hbs/handlebars', 'hbs/underscore', 'hbs/i18nprecompile', 'hbs/json2'
+  'hbs/handlebars', 'hbs/underscore', 'hbs/json2'
 //>>excludeEnd('excludeHbs')
 ], function (
 //>>excludeStart('excludeHbs', pragmas.excludeHbs)
-  Handlebars, _, precompile, JSON
+  Handlebars, _, JSON
 //>>excludeEnd('excludeHbs')
 ) {
   //>>excludeStart('excludeHbs', pragmas.excludeHbs)
+  function precompile(string, _unused, options) {
+    var ast, environment;
+
+    options = options || {};
+
+    if (!('data' in options)) {
+      options.data = true;
+    }
+
+    if (options.compat) {
+      options.useDepths = true;
+    }
+
+    ast = Handlebars.parse(string);
+
+    environment = new Handlebars.Compiler().compile(ast, options);
+    return new Handlebars.JavaScriptCompiler().compile(environment, options);
+  }
+
   var fs;
   var getXhr;
   var progIds = ['Msxml2.XMLHTTP', 'Microsoft.XMLHTTP', 'Msxml2.XMLHTTP.4.0'];
@@ -32,7 +51,6 @@ define([
   var devStyleDirectory = '/styles/';
   var buildStyleDirectory = '/demo-build/styles/';
   var helperDirectory = 'templates/helpers/';
-  var i18nDirectory = 'templates/i18n/';
   var buildCSSFileName = 'screen.build.css';
   var onHbsReadMethod = "onHbsRead";
 
@@ -200,7 +218,6 @@ define([
 
       var compiledName = name + customNameExtension;
       config.hbs = config.hbs || {};
-      var disableI18n = !(config.hbs.i18n == true); // by default we disable i18n unless config.hbs.i18n is true
       var disableHelpers = (config.hbs.helpers == false); // be default we enable helpers unless config.hbs.helpers is false
       var partialsUrl = '';
       if(config.hbs.partialsUrl) {
@@ -550,7 +567,7 @@ define([
                               't.vars = ' + JSON.stringify(vars) + ';\n';
           }
 
-          var mapping = disableI18n? false : _.extend( langMap, config.localeMapping );
+          var mapping = false;
           var configHbs = config.hbs || {};
           var options = _.extend(configHbs.compileOptions || {}, { originalKeyFallback: configHbs.originalKeyFallback });
           var prec = precompile( text, mapping, options);
@@ -565,7 +582,7 @@ define([
           var handlebarsPath = (config.hbs && config.hbs.handlebarsPath) ? config.hbs.handlebarsPath : 'hbs/handlebars';
 
           text = '/* START_TEMPLATE */\n' +
-                 'define('+tmplName+"['hbs','"+handlebarsPath+"'"+depStr+helpDepStr+'], function( hbs, Handlebars ){ \n' +          
+                 'define('+tmplName+"['hbs','"+handlebarsPath+"'"+depStr+helpDepStr+'], function( hbs, Handlebars ){ \n' +
                    'var t = Handlebars.template(' + prec + ');\n' +
                    "Handlebars.registerPartial('" + name + "', t);\n";
 
@@ -630,30 +647,7 @@ define([
         path = parentRequire.toUrl(name +'.'+ (config.hbs && config.hbs.templateExtension ? config.hbs.templateExtension : templateExtension));
       }
 
-      if (disableI18n){
-        fetchAndRegister(false);
-      }
-      else {
-        // Workaround until jam is able to pass config info or we move i18n to a separate module.
-        // This logs a warning and disables i18n if there's an error loading the language file
-        var langMapPath = (config.hbs && config.hbs.i18nDirectory ? config.hbs.i18nDirectory : i18nDirectory) + (config.locale || 'en_us') + '.json';
-        try {
-          fetchOrGetCached(parentRequire.toUrl(langMapPath), function (langMap) {
-            fetchAndRegister(JSON.parse(langMap));
-          });
-        }
-        catch(er) {
-          // if there's no configuration at all, log a warning and disable i18n for this and subsequent templates
-          if(!config.hbs) {
-            console.warn('hbs: Error reading ' + langMapPath + ', disabling i18n. Ignore this if you\'re using jam, otherwise check your i18n configuration.\n');
-            config.hbs = {i18n: false, helpers: true};
-            fetchAndRegister(false);
-          }
-          else {
-            throw er;
-          }
-        }
-      }
+      fetchAndRegister(false);
       //>>excludeEnd('excludeHbs')
     },
 

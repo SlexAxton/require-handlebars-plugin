@@ -14,7 +14,7 @@
         excludeHbsParser : true,
         // kills the entire plugin set once it's built.
         excludeHbs: true,
-        // removes i18n precompiler, handlebars and json2
+        // removes handlebars and json2
         excludeAfterBuild: true
     },
     exclude: ["handlebars"],
@@ -33,14 +33,8 @@
     // default plugin settings, listing here just as a reference
     hbs : {
         templateExtension : 'hbs',
-        // if disableI18n is `true` it won't load locales and the i18n helper
-        // won't work as well.
-        i18n : true,
-        helperDirectory : "template/helpers/",
-        i18nDirectory: "template/i18n/"
+        helperDirectory : "template/helpers/"
     },
-
-
 
     modules: [
         {
