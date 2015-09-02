@@ -562,8 +562,10 @@ define([
           if(config.hbs._partials[name])
             partialReferences = config.hbs._partials[name].references;
 
+          var handlebarsPath = (config.hbs && config.hbs.handlebarsPath) ? config.hbs.handlebarsPath : 'hbs/handlebars';
+
           text = '/* START_TEMPLATE */\n' +
-                 'define('+tmplName+"['hbs','hbs/handlebars'"+depStr+helpDepStr+'], function( hbs, Handlebars ){ \n' +
+                 'define('+tmplName+"['hbs','"+handlebarsPath+"'"+depStr+helpDepStr+'], function( hbs, Handlebars ){ \n' +          
                    'var t = Handlebars.template(' + prec + ');\n' +
                    "Handlebars.registerPartial('" + name + "', t);\n";
 
