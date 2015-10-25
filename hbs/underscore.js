@@ -1,4 +1,3 @@
-//>>excludeStart('excludeAfterBuild', pragmas.excludeAfterBuild)
 
 //     Underscore.js 1.3.3
 //     (c) 2009-2012 Jeremy Ashkenas, DocumentCloud Inc.
@@ -1042,4 +1041,3 @@ define(function() {
     return _;
 
 });
-//>>excludeEnd('excludeAfterBuild')
