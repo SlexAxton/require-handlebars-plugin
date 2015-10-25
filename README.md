@@ -90,7 +90,7 @@ Just put your helpers in `templates/helpers/*` and they'll automagically get pul
 I find that many helpers are good helpers in regular code as well, so the following is a good practice:
 
 ```javascript
-define('templates/helpers/roundNumber', ['hbs/handlebars'], function ( Handlebars ) {
+define('templates/helpers/roundNumber', ['handlebars'], function ( Handlebars ) {
   function roundNumber ( context, options ) {
     // Simple function for example
     return Math.round( context );
@@ -233,10 +233,11 @@ require.config({
     templateExtension: "html"     // Set the extension automatically appended to templates
                                   // ('hbs' by default)
 
-    handlebarsPath:               // Custom path to handlebars ('hbs/handlebars' by default)
-      'some/path/to/handlebars'   // Value could simply be 'handlebars' as long as key
-                                  // 'handlebars' is defined in require's paths object
-                                  // such as 'handlebars': 'some/path/to/handlebars'
+    handlebarsPath:               // Custom path to handlebars for compiled templates
+      'some/path/to/handlebars'   // ('hbs/handlebars' by default). Could simply be 'handlebars'
+                                  // as long as it is defined in paths. If you are stubbing out
+                                  // the plugin in an optimized build, use this to point to 
+                                  // the runtime hbs (see demo/app.build.js)
 
     compileOptions: {}            // options object which is passed to Handlebars compiler
   }
