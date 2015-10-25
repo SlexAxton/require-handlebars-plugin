@@ -4,7 +4,7 @@
     dir: "../demo-build",
 
     optimizeCss: "standard",
-    optimize: "none",
+    // optimize: "none",
     // inlining ftw
     inlineText: true,
 
