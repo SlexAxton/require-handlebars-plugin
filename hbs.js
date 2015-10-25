@@ -252,16 +252,16 @@ define([
 
       // TODO :: use the parser to do this!
       function findPartialDeps( nodes , metaObj) {
-      var res = [];
-      if ( nodes && nodes.body ) {
-        res = recursiveNodeSearch( nodes.body, [] );
-      }
+        var res = [];
+        if ( nodes && nodes.body ) {
+          res = recursiveNodeSearch( nodes.body, [] );
+        }
 
-      if(metaObj && metaObj.partials && metaObj.partials.length){
-        _(metaObj.partials).forEach(function ( partial ) {
-          res.push(partial);
-        });
-      }
+        if(metaObj && metaObj.partials && metaObj.partials.length){
+          _(metaObj.partials).forEach(function ( partial ) {
+            res.push(partial);
+          });
+        }
 
         return _.unique(res);
       }
@@ -424,7 +424,7 @@ define([
       }
 
       function fetchAndRegister(langMap) {
-          fetchText(path, function(text, path) {
+        fetchText(path, function(text, path) {
 
           var readCallback = (config.isBuild && config[onHbsReadMethod]) ? config[onHbsReadMethod]:  function(name,path,text){return text} ;
           // for some reason it doesn't include hbs _first_ when i don't add it here...
