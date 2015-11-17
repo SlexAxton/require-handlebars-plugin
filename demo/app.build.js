@@ -8,20 +8,11 @@
     // inlining ftw
     inlineText: true,
 
-    pragmasOnSave: {
-        //removes Handlebars.Parser code (used to compile template strings) set
-        //it to `false` if you need to parse template strings even after build
-        excludeHbsParser : true,
-        // kills the entire plugin set once it's built.
-        excludeHbs: true,
-        // removes handlebars and json2
-        excludeAfterBuild: true
-    },
-    exclude: ["handlebars"],
-    include: ["handlebars.runtime"],
+    stubModules: ['hbs', 'hbs/underscore', 'hbs/json2', 'hbs/handlebars'],
 
     paths: {
-      "hbs": "../hbs"
+      "hbs": "../hbs",
+      "handlebars": "../hbs/handlebars.runtime"
       // if your project is already using underscore.js and you want to keep
       // the hbs plugin even after build (excludeHbs:false) you should set the
       // "hbs/underscore" path to point to the shared location like
@@ -30,10 +21,12 @@
 
     locale: "en_ca",
 
-    // default plugin settings, listing here just as a reference
     hbs : {
+        // default plugin settings, listing here just as a reference
         templateExtension : 'hbs',
-        helperDirectory : "template/helpers/"
+        helperDirectory : "template/helpers/",
+
+        handlebarsPath: "handlebars"
     },
 
     modules: [

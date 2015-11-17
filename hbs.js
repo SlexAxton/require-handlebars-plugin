@@ -9,16 +9,7 @@
 /*jslint evil: true, strict: false, plusplus: false, regexp: false */
 /*global require: false, XMLHttpRequest: false, ActiveXObject: false,
 define: false, process: false, window: false */
-define([
-//>>excludeStart('excludeHbs', pragmas.excludeHbs)
-  'hbs/handlebars', 'hbs/underscore', 'hbs/json2'
-//>>excludeEnd('excludeHbs')
-], function (
-//>>excludeStart('excludeHbs', pragmas.excludeHbs)
-  Handlebars, _, JSON
-//>>excludeEnd('excludeHbs')
-) {
-  //>>excludeStart('excludeHbs', pragmas.excludeHbs)
+define(['hbs/handlebars', 'hbs/underscore', 'hbs/json2'], function (Handlebars, _, JSON) {
   function precompile(string, _unused, options) {
     var ast, environment;
 
@@ -192,7 +183,6 @@ define([
   };
   var styleList = [];
   var styleMap = {};
-  //>>excludeEnd('excludeHbs')
 
   var config;
   var filesToRemove = [];
@@ -213,7 +203,6 @@ define([
     version: '3.0.3',
 
     load: function (name, parentRequire, load, _config) {
-      //>>excludeStart('excludeHbs', pragmas.excludeHbs)
       config = config || _config;
 
       var compiledName = name + customNameExtension;
@@ -252,16 +241,16 @@ define([
 
       // TODO :: use the parser to do this!
       function findPartialDeps( nodes , metaObj) {
-      var res = [];
-      if ( nodes && nodes.body ) {
-        res = recursiveNodeSearch( nodes.body, [] );
-      }
+        var res = [];
+        if ( nodes && nodes.body ) {
+          res = recursiveNodeSearch( nodes.body, [] );
+        }
 
-      if(metaObj && metaObj.partials && metaObj.partials.length){
-        _(metaObj.partials).forEach(function ( partial ) {
-          res.push(partial);
-        });
-      }
+        if(metaObj && metaObj.partials && metaObj.partials.length){
+          _(metaObj.partials).forEach(function ( partial ) {
+            res.push(partial);
+          });
+        }
 
         return _.unique(res);
       }
@@ -424,7 +413,7 @@ define([
       }
 
       function fetchAndRegister(langMap) {
-          fetchText(path, function(text, path) {
+        fetchText(path, function(text, path) {
 
           var readCallback = (config.isBuild && config[onHbsReadMethod]) ? config[onHbsReadMethod]:  function(name,path,text){return text} ;
           // for some reason it doesn't include hbs _first_ when i don't add it here...
@@ -582,7 +571,7 @@ define([
           var handlebarsPath = (config.hbs && config.hbs.handlebarsPath) ? config.hbs.handlebarsPath : 'hbs/handlebars';
 
           text = '/* START_TEMPLATE */\n' +
-                 'define('+tmplName+"['hbs','"+handlebarsPath+"'"+depStr+helpDepStr+'], function( hbs, Handlebars ){ \n' +
+                 'define('+tmplName+"['"+handlebarsPath+"'"+depStr+helpDepStr+'], function( Handlebars ){ \n' +
                    'var t = Handlebars.template(' + prec + ');\n' +
                    "Handlebars.registerPartial('" + name + "', t);\n";
 
@@ -648,7 +637,6 @@ define([
       }
 
       fetchAndRegister(false);
-      //>>excludeEnd('excludeHbs')
     },
 
     onLayerEnd: function () {

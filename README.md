@@ -90,7 +90,7 @@ Just put your helpers in `templates/helpers/*` and they'll automagically get pul
 I find that many helpers are good helpers in regular code as well, so the following is a good practice:
 
 ```javascript
-define('templates/helpers/roundNumber', ['hbs/handlebars'], function ( Handlebars ) {
+define('templates/helpers/roundNumber', ['handlebars'], function ( Handlebars ) {
   function roundNumber ( context, options ) {
     // Simple function for example
     return Math.round( context );
@@ -174,6 +174,13 @@ Note: All of these go away after a build, as they just take up space with data t
 
 As long as all of your paths match up, this should precompile all of your templates and include them in the build.
 
+You can stub out the hbs plugin in the build using [stubModules](https://github.com/jrburke/r.js/blob/master/build/example.build.js#L316) the same way you would for other plugins that inline the final function. Your helpers and compiled templates still need to load Handlebars though, so you'll need to make sure they load the runtime version of Handlebars included in this repo as `hbs/handlebars.runtime.js`. You just need to do 2 things for that in your build config:
+
+1. Make sure hbs.handlebarsPath resolves to hbs/handlebars.runtime.js
+2. Make sure your helpers load the same file
+
+See the [example build configuration](https://github.com/SlexAxton/require-handlebars-plugin/blob/master/demo/app.build.js) for a way to do that by setting `handlebarsPath` to `handlebars`, having the helpers load `handlebars`, and setting `handlebars` to hbs/handlebars.runtime in the paths.config
+
 ## Before Build
 
 ![Before Build](http://i.imgur.com/YSTI3.jpg)
@@ -233,10 +240,11 @@ require.config({
     templateExtension: "html"     // Set the extension automatically appended to templates
                                   // ('hbs' by default)
 
-    handlebarsPath:               // Custom path to handlebars ('hbs/handlebars' by default)
-      'some/path/to/handlebars'   // Value could simply be 'handlebars' as long as key
-                                  // 'handlebars' is defined in require's paths object
-                                  // such as 'handlebars': 'some/path/to/handlebars'
+    handlebarsPath:               // Custom path to handlebars for compiled templates
+      'some/path/to/handlebars'   // ('hbs/handlebars' by default). Could simply be 'handlebars'
+                                  // as long as it is defined in paths. If you are stubbing out
+                                  // the plugin in an optimized build, use this to point to 
+                                  // the runtime hbs (see demo/app.build.js)
 
     compileOptions: {}            // options object which is passed to Handlebars compiler
   }
