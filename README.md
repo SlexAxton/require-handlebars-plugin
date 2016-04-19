@@ -229,8 +229,8 @@ require.config({
 
   // hbs config
   hbs: {
-    disableHelpers: true,         // When true, won't look for and try to automatically load
-                                  // helpers (false by default)
+    helpers: false,               // When false, won't look for and try to automatically load
+                                  // helpers (true by default)
 
     helperPathCallback:           // Callback to determine the path to look for helpers
       function (name) {           // ('/templates/helpers/'+name by default)
