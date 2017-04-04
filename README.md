@@ -103,7 +103,7 @@ define('templates/helpers/roundNumber', ['handlebars'], function ( Handlebars ) 
 Then in your templates, you can just do:
 
 ```mustache
-{{roundNumber Data.ThreeFourths}}
+{{#roundNumber Data.ThreeFourths}}
 ```
 
 The system will make sure these modules are pulled in automatically from that directory. But if in your app, you need a rounding module (perhaps in a view/datanormalization place), you could do this:
