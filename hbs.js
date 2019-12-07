@@ -307,7 +307,7 @@ define(['hbs/handlebars', 'hbs/underscore', 'hbs/json2'], function (Handlebars, 
         }
 
         if(statement && statement.params){
-          statement.params.forEach(function (param) {
+          _(statement.params).forEach(function (param) {
             checkStatementForHelpers(param, helpersres);
           });
         }
@@ -641,7 +641,7 @@ define(['hbs/handlebars', 'hbs/underscore', 'hbs/json2'], function (Handlebars, 
 
     onLayerEnd: function () {
       if (config.removeCombined && fs) {
-        filesToRemove.forEach(function (path) {
+        _(filesToRemove).forEach(function (path) {
           if (fs.existsSync(path)) {
             fs.unlinkSync(path);
           }
